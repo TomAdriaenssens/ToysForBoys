@@ -1,0 +1,6 @@
+Takencategorieën:
+HOOG
+LAAG
+GEMIDDELD
+OPTIONEEL
+
