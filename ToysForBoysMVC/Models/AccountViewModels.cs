@@ -65,7 +65,7 @@ namespace ToysForBoysMVC.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress]        
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -79,6 +79,14 @@ namespace ToysForBoysMVC.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public string Name { get; set; }
+        public string StreetAndNr { get; set; }
+        public string City { get; set; }
+
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public int CountryID { get; set; }
+        private int test = 0;
     }
 
     public class ResetPasswordViewModel

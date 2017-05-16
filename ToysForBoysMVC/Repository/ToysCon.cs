@@ -13,11 +13,12 @@ namespace ToysForBoysMVC.Repository
         {
             using (var db = new toysforboysEntities())
             {
-                List<productline> AllProductLines = db.GetAllProductLines2().ToList();
-                return AllProductLines;
+                
+                return db.productlines.OrderBy(m => m.name).ToList();
+           
             }
 
-            
+
         }
 
         public List<product> GetProductLineDetails(int id)
@@ -33,12 +34,38 @@ namespace ToysForBoysMVC.Repository
 
         }
 
+        public List<country> GetAllCountries()
+        {
+            using (var db = new toysforboysEntities())
+            {
+                var query = (from countries in db.countries
+                             select countries).ToList();
+                return query;
+            }
+                
+        }
+        public void RegisterCustomer(RegisterViewModel model)
+        {
+            customer newcustomer = new customer() { name = model.Name, streetAndNumber = model.StreetAndNr, city = model.City, state = model.State, postalCode = model.PostalCode, countryId = model.CountryID };
+            using (var db = new toysforboysEntities())
+            {
+                db.customers.Add(newcustomer);
+                db.SaveChanges();
+            }
+        }
+
+        public customer GetCustomerByEmail(string email)
+        {
+            using (var db = new toysforboysEntities())
+            {
+                var customer = db.customers.Find(email);
+                return customer;
+            }
+        }
+
         //public List<productline> GetAllProductLines()
         //{
-        //    using (var db = new toysforboysEntities())
-        //    {
-        //        return db.productlines.OrderBy(m => m.name).ToList();
-        //    }
+        //    
         //}
     }
 }
