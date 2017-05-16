@@ -3,29 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ToysForBoysMVC.Repository;
 
 namespace ToysForBoysMVC.Controllers
 {
     public class HomeController : Controller
     {
+
+        private ToysCon db = new ToysCon();
         public ActionResult Index()
         {
-            var yoe = "yo";
-            return View();
+            var allProductlines = db.GetAllProductLines();
+            return View(allProductlines);
         }
 
-        public ActionResult About()
+
+        public ActionResult ProductDetails(int id)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            var productDetails = db.GetProductLineDetails(id);
+            return View(productDetails);
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        
     }
 }
