@@ -10,6 +10,7 @@ namespace ToysForBoysMVC.Controllers
     {
         public ActionResult Index()
         {
+            var yoe = "yo";
             return View();
         }
 
