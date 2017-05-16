@@ -1,0 +1,28 @@
+﻿<Window x:Class="ToysForBoysGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToysForBoysGUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="480" Width="640">
+    
+    <StackPanel Orientation="Vertical"                  DataContext="{StaticResource leverancierViewSource}">
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Kies postnummer" Width="150"></Label>
+            <ComboBox Name="comboBoxPostnummers" Width="100"                  SelectionChanged="comboBoxPostnummers_SelectionChanged"></ComboBox>
+        </StackPanel>
+        <DataGrid x:Name="leverancierDataGrid"                    AutoGenerateColumns="False"                    EnableRowVirtualization="True"                    ItemsSource="{Binding}"                   RowDetailsVisibilityMode="VisibleWhenSelected"                    Width="auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn"                     Binding="{Binding Id}" Header="ID Nr" Width="1*"                  IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="nameColumn"                   Binding="{Binding Name}" Header="Name" Width="2*"/>
+                <DataGridTextColumn x:Name="scaleColumn"                  Binding="{Binding Scale}" Header="Scale" Width="1*"/>
+                <DataGridTextColumn x:Name="descrColumn"                  Binding="{Binding Descr}" Header="Description" Width="2*"/>
+                <DataGridTextColumn x:Name="inStockColumn"                Binding="{Binding QuantityInStock}" Header="Qtity in stock"                    Width="2*"/>
+                <DataGridTextColumn x:Name="inOrderColumn"                Binding="{Binding QuantityInOrder}" Header="Qtity in Order" Width="2*"/>
+                <DataGridTextColumn x:Name="priceColumn"                  Binding="{Binding Price}" Header="Price" Width="1*"/>
+                <DataGridTextColumn x:Name="productlineIdColumn"          Binding="{Binding ProductlineId}" Header="Productline" Width="1*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</Window>

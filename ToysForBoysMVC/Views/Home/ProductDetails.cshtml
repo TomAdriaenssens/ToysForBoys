@@ -1,0 +1,41 @@
+﻿@model List<ToysForBoysMVC.Models.product>
+@{
+    ViewBag.Title = "ProductDetails";
+}
+
+<h2>ProductDetails</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Scale</th>
+            <th>Beschrijving</th>
+            <th class="rechts">Prijs</th>
+            <th class="rechts">In stock</th>
+            <th>Bestellen</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td class="col-md-2">@Html.DisplayFor(m => product.name) </td>
+                <td class="col-md-3">@product.scale</td>
+                <td class="col-md-3">@product.description</td>
+                <td class="col-md-1 rechts">@Html.DisplayFor(m => product.buyPrice) </td>
+                <td class="col-md-2 rechts">@product.quantityInStock</td>
+                @if (product.quantityInStock > 0)
+                {
+                    var urlReserveren = Url.Action("Winkelmandje", "Home", new { id = product.id });
+                    <td class="col-md-1"> <a href="@urlReserveren">Bestellen</a> </td>
+                }
+                else
+                {
+                    <td class="col-md-1"> <span class="label label-danger">uitverkocht</span> </td> }
+            </tr> }
+    </tbody>
+</table>
+
+
+
