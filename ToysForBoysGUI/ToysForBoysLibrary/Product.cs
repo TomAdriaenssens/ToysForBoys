@@ -12,10 +12,11 @@ namespace ToysForBoysLibrary
         private string name;
         private string scale;
         private string description;
-        private int quantityInStock;
-        private int quantityInOrder;
-        private decimal buyPrice;
-        private int productlineId;
+        private int? quantityInStock;
+        private int? quantityInOrder;
+        private decimal? buyPrice;
+        private int? productlineId;
+        private bool changed;
 
         public int Id
         {
@@ -24,48 +25,62 @@ namespace ToysForBoysLibrary
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set { name = value;
+                changed = true;  }
         }
         public string Scale
         {
             get { return scale; }
-            set { scale = value; }
+            set { scale = value;
+                changed = true;
+            }
         }
         public string Description
         {
             get { return description; }
-            set { description = value; }
+            set { description = value;
+                changed = true;
+            }
         }
-        public int QuantityInStock
+        public int? QuantityInStock
         {
             get { return quantityInStock; }
-            set { quantityInStock = value; }
+            set { quantityInStock = value;
+                changed = true;
+            }
         }
-        public int QuantityInOrder
+        public int? QuantityInOrder
         {
             get { return quantityInOrder; }
-            set { quantityInOrder = value; }
+            set { quantityInOrder = value;
+                changed = true;
+            }
         }
-        public decimal BuyPrice
+        public decimal? BuyPrice
         {
             get { return buyPrice; }
-            set { value = buyPrice; }
+            set { value = buyPrice;
+                changed = true;
+            }
         }
-        public int ProductlineId
+        public int? ProductlineId
         {
             get { return productlineId; }
-            set { productlineId = value; }
+            set { productlineId = value;
+                changed = true;
+            }
         }
-        public Product(int newId, string newName, string newScale, string newDescr, int newInSTock, int newInOrder, decimal newPrice, int newProductLineId)
+        public Product(int id, string name, string scale, string descr, int? inSTock, int? inOrder, decimal? price, int? productLineId)
         {
-            id = newId;
-            Name = newName;
-            Description = newDescr;
-            QuantityInStock = newInSTock;
-            QuantityInOrder = newInOrder;
-            BuyPrice = newPrice;
-            ProductlineId = newProductLineId;
-            Scale = newScale;
+            this.id = id;
+            Name = name;
+            Description = descr;
+            QuantityInStock = inSTock;
+            QuantityInOrder = inOrder;
+            BuyPrice = price;
+            ProductlineId = productLineId;
+            Scale = scale;
+            changed = false;
         }
 
         public Product() { }

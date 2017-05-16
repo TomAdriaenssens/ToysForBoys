@@ -4,20 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
-using System.Data.Common
+using System.Data.Common;
+
 
 namespace ToysForBoysLibrary
 {
-    class ToysForBoysDbManager
+    public class ToysForBoysDbManager
     {
-        private static ConnectionStringSettings conVideoSettings = ConfigurationManager.ConnectionStrings[""];
+        private static ConnectionStringSettings conToysForBoysSetting = ConfigurationManager.ConnectionStrings["toysForBoys"];
+
         private static DbProviderFactory factory =
-        DbProviderFactories.GetFactory(conVideoSettings.ProviderName);
+            DbProviderFactories.GetFactory(conToysForBoysSetting.ProviderName);
+
         public DbConnection GetConnection()
         {
-            var conVideo = factory.CreateConnection();
-            conVideo.ConnectionString = conVideoSettings.ConnectionString;
-            return conVideo;
+            var contoysForBoys = factory.CreateConnection();
+            contoysForBoys.ConnectionString = conToysForBoysSetting.ConnectionString;
+            return contoysForBoys;
         }
     }
 }
