@@ -33,8 +33,8 @@ namespace ToysForBoysLibrary
                         parName.Value = name ;
                         comProducten.Parameters.Add(parName);
                     }
-                    //else comProducten.CommandText = "[ToysForBoys].[dbo].[SP_GetAllProducts]";
-                     else comProducten.CommandText = "select * from [ToysForBoys].[dbo].[Products]";
+                      else comProducten.CommandText = "[toysforboys].[dbo].[SP_GetAllProducts]";
+                     
 
 
                     conProducten.Open();
