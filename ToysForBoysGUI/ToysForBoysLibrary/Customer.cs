@@ -17,18 +17,11 @@ namespace ToysForBoysLibrary
         private String postalCodeValue;
         private Int32 countryIdValue;
 
-
-
-
-
-        //private Int32? omzetValue;  // Nullable Data type porque esta column puede no estar rellena en la BD
-
-        public bool Changed { get; set; }  // Se anade una nueva property para saber 
-                                           //si alguna de las otras properties se ha cambiado, por el usuario, y 
-                                           // hay que actualizarlo tambien en la BD
+        
+        public bool Changed { get; set; }  
 
         public Int32 CustomerId
-        { get { return customerIdValue; } } // AUTONUMBER (sin SET)
+        { get { return customerIdValue; } } 
 
 
 
@@ -38,7 +31,7 @@ namespace ToysForBoysLibrary
             set
             {
                 nameValue = value;
-                Changed = true;    // Si el valor se ha cambiado
+                Changed = true;    //Als de waarde veranderd is
             }
         }
 
@@ -49,7 +42,7 @@ namespace ToysForBoysLibrary
             set
             {
                 streetAndNumberValue = value;
-                Changed = true;    // Si el valor se ha cambiado
+                Changed = true;    //Als de waarde veranderd is
             }
         }
 
@@ -59,7 +52,7 @@ namespace ToysForBoysLibrary
             set
             {
                 cityValue = value;
-                Changed = true;    // Si el valor se ha cambiado
+                Changed = true;    //Als de waarde veranderd is
             }
         }
 
@@ -69,7 +62,7 @@ namespace ToysForBoysLibrary
             set
             {
                 stateValue = value;
-                Changed = true;    // Si el valor se ha cambiado
+                Changed = true;    //Als de waarde veranderd is
             }
         }
 
@@ -79,7 +72,7 @@ namespace ToysForBoysLibrary
             set
             {
                 postalCodeValue = value;
-                Changed = true;    // Si el valor se ha cambiado
+                Changed = true;    //Als de waarde veranderd is
             }
         }
 
@@ -89,7 +82,7 @@ namespace ToysForBoysLibrary
             set
             {
                 countryIdValue = value;
-                Changed = true;    // Si el valor se ha cambiado
+                Changed = true;    //Als de waarde veranderd is
             }
         }
 
@@ -107,7 +100,7 @@ namespace ToysForBoysLibrary
             this.PostalCode = postalcode;
             this.CountryId = countryId;
 
-            this.Changed = false; // Al crear un objeto, ninguna property se ha cambiado por defecto
+            this.Changed = false;
         }
         public Customer() { }
     }
