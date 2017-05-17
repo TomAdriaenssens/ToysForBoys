@@ -57,6 +57,7 @@ namespace ToysForBoysGUI
             if (comboBoxProductLine.SelectedItem != null)
             {
                 category = comboBoxProductLine.SelectedItem.ToString();
+
             }
             productsOb = prodManager.GetProductsByProductLineName(category);
             productsViewSource.Source = productsOb;
