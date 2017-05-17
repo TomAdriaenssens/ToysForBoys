@@ -25,7 +25,7 @@ namespace ToysForBoysLibrary
                     
                     comProducten.CommandText = "[toysforboys].[dbo].[SP_ProductLines]";
                     
-                    conProducten.Open();
+                        conProducten.Open();
 
                     using (var rdrProducts = comProducten.ExecuteReader())
                     {
