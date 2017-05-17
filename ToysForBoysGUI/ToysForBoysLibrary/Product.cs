@@ -66,20 +66,21 @@ namespace ToysForBoysLibrary
         public int? ProductlineId
         {
             get { return productlineId; }
-            set {
-                productlineId = value;
+            set { productlineId = value;
                 Changed = true;
             }
         }
+
 
         public bool Changed
         {
             get { return changed; }
             set
             {
-                changed= value;
+                changed = value;
             }
         }
+
 
         public Product(int id, string name, string scale, string descr, int? inSTock, int? inOrder, decimal? price, int? productLineId)
         {

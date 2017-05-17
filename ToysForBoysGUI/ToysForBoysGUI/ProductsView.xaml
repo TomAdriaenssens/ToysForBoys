@@ -22,6 +22,7 @@
         <Border Height="120" Background="SkyBlue" BorderBrush="Black"
 BorderThickness="1"
 DockPanel.Dock="Bottom" >
+            <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="saveButton_Click"></Button>
             
         </Border>
         <Border DataContext="{StaticResource productViewSource}" 

@@ -21,9 +21,8 @@ namespace ToysForBoysLibrary
             {
                 using (var comProducten = conProducten.CreateCommand())
                 {
-                    comProducten.CommandType = CommandType.Text;
-                    //comProducten.CommandText = "[toysforboys].[dbo].[SP_GetAllProducts]";
-                    comProducten.CommandText = "select * from productlines";
+                    comProducten.CommandType = CommandType.StoredProcedure;
+                    comProducten.CommandText = "[toysforboys].[dbo].[SP_GetAllProducts]";
              
                     conProducten.Open();
 
