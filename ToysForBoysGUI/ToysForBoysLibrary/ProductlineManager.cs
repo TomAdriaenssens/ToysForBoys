@@ -11,7 +11,7 @@ namespace ToysForBoysLibrary
     public class ProductlineManager
     {
 
-        public List<Productline> GetProductlines()
+        public static List<Productline> GetProductlines()
         {
             List<Productline> prodlines = new List<Productline>();
 

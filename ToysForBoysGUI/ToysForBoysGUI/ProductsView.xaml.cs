@@ -41,7 +41,7 @@ namespace ToysForBoysGUI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            VulDeComboBox();
             VulDeGrid();
         }
 
@@ -55,6 +55,15 @@ namespace ToysForBoysGUI
             productsViewSource.Source = productsOb;
             productsOb.CollectionChanged += this.OnCollectionChanged;
 
+        }
+
+        private void VulDeComboBox ()
+        {
+            productlinesList = ProductlineManager.GetProductlines();
+            foreach (Productline prodline in productlinesList)
+            {
+                comboBoxProductLine.Items.Add(prodline.Name);
+            }
         }
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
