@@ -112,5 +112,15 @@ namespace ToysForBoysLibrary
             } // using conToysForBoys
             return products;
         }
+
+        public List<Product> AddNewProductToToysForBoys(List<Product> newProducts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Product> UpdateProductToToysForBoys(List<Product> modifiedProducts)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

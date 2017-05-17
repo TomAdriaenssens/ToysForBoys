@@ -26,50 +26,62 @@ namespace ToysForBoysLibrary
         {
             get { return name; }
             set { name = value;
-                changed = true;  }
+                Changed = true;  }
         }
         public string Scale
         {
             get { return scale; }
             set { scale = value;
-                changed = true;
+                Changed = true;
             }
         }
         public string Description
         {
             get { return description; }
             set { description = value;
-                changed = true;
+                Changed = true;
             }
         }
         public int? QuantityInStock
         {
             get { return quantityInStock; }
             set { quantityInStock = value;
-                changed = true;
+                Changed = true;
             }
         }
         public int? QuantityInOrder
         {
             get { return quantityInOrder; }
             set { quantityInOrder = value;
-                changed = true;
+                Changed = true;
             }
         }
         public decimal? BuyPrice
         {
             get { return buyPrice; }
-            set { value = buyPrice;
-                changed = true;
+            set { buyPrice = value;
+                Changed = true;
             }
         }
         public int? ProductlineId
         {
             get { return productlineId; }
             set { productlineId = value;
-                changed = true;
+                Changed = true;
             }
         }
+
+
+        public bool Changed
+        {
+            get { return changed; }
+            set
+            {
+                changed = value;
+            }
+        }
+
+
         public Product(int id, string name, string scale, string descr, int? inSTock, int? inOrder, decimal? price, int? productLineId)
         {
             this.id = id;
@@ -80,7 +92,7 @@ namespace ToysForBoysLibrary
             BuyPrice = price;
             ProductlineId = productLineId;
             Scale = scale;
-            changed = false;
+            Changed = false;
         }
 
         public Product() { }
