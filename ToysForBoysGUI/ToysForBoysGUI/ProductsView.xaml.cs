@@ -51,7 +51,14 @@ namespace ToysForBoysGUI
         {
             productsViewSource = (CollectionViewSource)(this.FindResource("productViewSource"));
             var prodManager = new ProductManager();
-            productsOb = prodManager.GetProductsByProductLineName(string.Empty);
+
+            string category = null;
+
+            if (comboBoxProductLine.SelectedItem != null)
+            {
+                category = comboBoxProductLine.SelectedItem.ToString();
+            }
+            productsOb = prodManager.GetProductsByProductLineName(category);
             productsViewSource.Source = productsOb;
             productsOb.CollectionChanged += this.OnCollectionChanged;
 

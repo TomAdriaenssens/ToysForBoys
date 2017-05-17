@@ -25,7 +25,7 @@ namespace ToysForBoysLibrary
                     comProducten.CommandType = CommandType.StoredProcedure;
                     
 
-                    if (name != string.Empty)
+                    if (!string.IsNullOrEmpty(name))
                     {
                         comProducten.CommandText = "[ToysForBoys].[dbo].[SP_GetAllProductsOfOneProductLineName]";
 
