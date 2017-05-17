@@ -115,8 +115,82 @@ namespace ToysForBoysLibrary
 
         public List<Product> AddNewProductToToysForBoys(List<Product> newProducts)
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
+
+  
+            List<Product> nietToegevoegdeProducts = new List<Product>();
+            var manager = new ToysForBoysDbManager();
+            using (var conBieren = manager.GetConnection())
+            {
+                using (var comInsert = conBieren.CreateCommand())
+                {
+                    comInsert.CommandType = CommandType.StoredProcedure;
+                    comInsert.CommandText = "SP_ToysForBoys_AddNewProduct";
+
+                    var parName = comInsert.CreateParameter();
+                    parName.ParameterName = "@name";
+                    comInsert.Parameters.Add(parName);
+
+                    var parScale = comInsert.CreateParameter();
+                    parScale.ParameterName = "@scale";
+                    comInsert.Parameters.Add(parScale);
+
+                    var parDescription = comInsert.CreateParameter();
+                    parDescription.ParameterName = "@description";
+                    comInsert.Parameters.Add(parDescription);
+
+                    var parQuantityInStock = comInsert.CreateParameter();
+                    parQuantityInStock.ParameterName = "@quantityInStock";
+                    comInsert.Parameters.Add(parQuantityInStock);
+
+                    var parQuantityInOrder = comInsert.CreateParameter();
+                    parQuantityInOrder.ParameterName = "@quantityInOrder";
+                    comInsert.Parameters.Add(parQuantityInOrder);
+
+                    var parBuyPrice = comInsert.CreateParameter();
+                    parBuyPrice.ParameterName = "@buyPrice";
+                    comInsert.Parameters.Add(parBuyPrice);
+
+                    var parProductlineId = comInsert.CreateParameter();
+                    parProductlineId.ParameterName = "@productlineId";
+                    comInsert.Parameters.Add(parProductlineId);
+
+
+
+
+                    conBieren.Open();
+
+
+                    foreach (Product eenProduct in newProducts)
+
+
+                    {
+                        try
+                        {
+                            parName.Value = eenProduct.Name;
+                            parScale.Value = eenProduct.Scale;
+                            parDescription.Value = eenProduct.Description;
+                            parQuantityInStock.Value = eenProduct.QuantityInStock;
+                            parQuantityInOrder.Value = eenProduct.QuantityInOrder;
+                            parBuyPrice.Value = eenProduct.BuyPrice;
+                            parProductlineId.Value = eenProduct.ProductlineId;
+
+
+                           if (comInsert.ExecuteNonQuery() == 0)
+                                nietToegevoegdeProducts.Add(eenProduct);
+                        }
+                        catch (Exception ex)
+                        {
+                            nietToegevoegdeProducts.Add(eenProduct);
+                        }
+                    } // foreach
+                } // comInsert
+            } // conBieren
+            return nietToegevoegdeProducts;
         }
+
+
+    
 
         public List<Product> UpdateProductToToysForBoys(List<Product> modifiedProducts)
         {
