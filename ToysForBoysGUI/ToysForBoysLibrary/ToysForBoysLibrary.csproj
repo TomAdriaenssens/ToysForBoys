@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="Productlines.cs" />
     <Compile Include="ProductManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToysForBoysDbManager.cs" />
