@@ -131,7 +131,7 @@ namespace ToysForBoysGUI
                 }
             }
             MessageBox.Show(newProducts.Count - resultaatProducts.Count +
-            " brouwer(s) toegevoegd aan de database", "Info", MessageBoxButton.OK,
+            " Product(s) toegevoegd aan de database", "Info", MessageBoxButton.OK,
             MessageBoxImage.Information);
 
 
@@ -141,8 +141,13 @@ namespace ToysForBoysGUI
                 newProducts.Clear();
                 modifiedProducts.Clear();
             }
-        }
 
+        private void comboBoxProductLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VulDeGrid();
+        }
     }
+
+}
 
 
