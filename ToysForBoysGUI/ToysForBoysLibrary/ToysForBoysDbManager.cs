@@ -11,7 +11,7 @@ namespace ToysForBoysLibrary
 {
     public class ToysForBoysDbManager
     {
-        private static ConnectionStringSettings conToysForBoysSetting = ConfigurationManager.ConnectionStrings["toysForBoys"];
+        private static ConnectionStringSettings conToysForBoysSetting = ConfigurationManager.ConnectionStrings["toysforboys"];
 
         private static DbProviderFactory factory =
             DbProviderFactories.GetFactory(conToysForBoysSetting.ProviderName);

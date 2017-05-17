@@ -16,13 +16,13 @@
             <StackPanel HorizontalAlignment="Left" Margin="0" Width="Auto" Orientation="Horizontal">
                
               <Label Content="Soort:"></Label>
-                <ComboBox Name="comboBoxProductLine" ></ComboBox>
+                <ComboBox Name="comboBoxProductLine"></ComboBox>
       </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black"
 BorderThickness="1"
 DockPanel.Dock="Bottom" >
-            <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="saveButton_Click"></Button>
+            <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="buttonSave_Click"></Button>
             
         </Border>
         <Border DataContext="{StaticResource productViewSource}" 

@@ -26,6 +26,7 @@ namespace ToysForBoysGUI
 
         private CollectionViewSource productsViewSource;
         public ObservableCollection<Product> productsOb = new ObservableCollection<Product>();
+        public List<Productline> productlinesList = new List<Productline>();
 
         public List<Product> OudeProducts = new List<Product>();
         public List<Product> newProducts = new List<Product>();
@@ -40,7 +41,7 @@ namespace ToysForBoysGUI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            VulDeComboBox();
             VulDeGrid();
         }
 
@@ -49,11 +50,20 @@ namespace ToysForBoysGUI
         private void VulDeGrid()
         {
             productsViewSource = (CollectionViewSource)(this.FindResource("productViewSource"));
-            var manager = new ProductManager();
-            productsOb = manager.GetProductsByProductLineName(string.Empty);
+            var prodManager = new ProductManager();
+            productsOb = prodManager.GetProductsByProductLineName(string.Empty);
             productsViewSource.Source = productsOb;
             productsOb.CollectionChanged += this.OnCollectionChanged;
 
+        }
+
+        private void VulDeComboBox ()
+        {
+            productlinesList = ProductlineManager.GetProductlines();
+            foreach (Productline prodline in productlinesList)
+            {
+                comboBoxProductLine.Items.Add(prodline.Name);
+            }
         }
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

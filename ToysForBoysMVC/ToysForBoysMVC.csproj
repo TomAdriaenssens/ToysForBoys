@@ -203,6 +203,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AantalMetId.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\country.cs">
       <DependentUpon>Toys.tt</DependentUpon>
@@ -242,6 +243,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Toys.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\WinkelMandItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ToysCon.cs" />
     <Compile Include="Startup.cs" />
@@ -324,6 +326,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\ProductDetails.cshtml" />
+    <Content Include="Views\Home\WinkelMandje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

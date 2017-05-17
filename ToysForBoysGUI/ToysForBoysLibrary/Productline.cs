@@ -23,7 +23,7 @@ namespace ToysForBoysLibrary
             set
             {
                 name = value;
-                changed = true;
+                Changed = true;
             }
         }
         public string Description
@@ -32,7 +32,16 @@ namespace ToysForBoysLibrary
             set
             {
                 description = value;
-                changed = true;
+                Changed = true;
+            }
+        }
+
+        public bool Changed
+        {
+            get { return changed; }
+            set
+            {
+                changed = value;
             }
         }
         
@@ -41,7 +50,7 @@ namespace ToysForBoysLibrary
             this.id = id;
             Name = name;
             Description = description;
-            changed = false;
+            Changed = false;
         }
 
         public Productline() { }

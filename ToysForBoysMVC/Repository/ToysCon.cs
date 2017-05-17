@@ -63,6 +63,15 @@ namespace ToysForBoysMVC.Repository
             }
         }
 
+        public product GetProductById(int? id)
+        {
+            using (var db = new toysforboysEntities())
+            {
+                var product = db.products.Find(id);
+                return product;
+            }
+        }
+
         //public List<productline> GetAllProductLines()
         //{
         //    

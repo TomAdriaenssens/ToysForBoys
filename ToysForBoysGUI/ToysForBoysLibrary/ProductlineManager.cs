@@ -11,9 +11,9 @@ namespace ToysForBoysLibrary
     public class ProductlineManager
     {
 
-        public ObservableCollection<Productline> GetProductlineNames()
+        public static List<Productline> GetProductlines()
         {
-            ObservableCollection<Productline> productlines = new ObservableCollection<Productline>();
+            List<Productline> prodlines = new List<Productline>();
 
             var dbManager = new ToysForBoysDbManager();
 
@@ -22,47 +22,48 @@ namespace ToysForBoysLibrary
                 using (var comProducten = conProducten.CreateCommand())
                 {
                     comProducten.CommandType = CommandType.StoredProcedure;
-                    comProducten.CommandText = "[toysforboys].[dbo].[SP_GetAllProducts]";
-             
+                    
+                    comProducten.CommandText = "[toysforboys].[dbo].[SP_ProductLines]";
+                    
                     conProducten.Open();
 
-                    using (var rdrProductlines = comProducten.ExecuteReader())
+                    using (var rdrProducts = comProducten.ExecuteReader())
                     {
-                        Int32 prodIdPos = rdrProductlines.GetOrdinal("id");
-                        Int32 prodNamePos = rdrProductlines.GetOrdinal("name");
-                        Int32 prodDescriptionPos = rdrProductlines.GetOrdinal("description");
+                        Int32 prodIdPos = rdrProducts.GetOrdinal("id");
+                        Int32 prodNamePos = rdrProducts.GetOrdinal("name");
+                        Int32 prodDescriptionPos = rdrProducts.GetOrdinal("description");
 
                         Int32 pId;
                         String pName;
                         String pDescription;
 
-                        while (rdrProductlines.Read())
+                        while (rdrProducts.Read())
                         {
 
-                            if (rdrProductlines.IsDBNull(prodIdPos))
+                            if (rdrProducts.IsDBNull(prodIdPos))
                             { pId = 0; }
                             else
-                            { pId = rdrProductlines.GetInt32(prodIdPos); }
+                            { pId = rdrProducts.GetInt32(prodIdPos); }
 
-                            if (rdrProductlines.IsDBNull(prodNamePos))
+                            if (rdrProducts.IsDBNull(prodNamePos))
                             { pName = null; }
                             else
-                            { pName = rdrProductlines.GetString(prodNamePos); }
+                            { pName = rdrProducts.GetString(prodNamePos); }
 
-                            if (rdrProductlines.IsDBNull(prodDescriptionPos))
+                            if (rdrProducts.IsDBNull(prodDescriptionPos))
                             { pDescription = null; }
                             else
-                            { pDescription = rdrProductlines.GetString(prodDescriptionPos); }
+                            { pDescription = rdrProducts.GetString(prodDescriptionPos); }
 
 
-                            productlines.Add(new Productline(pId, pName, pDescription));
+                            prodlines.Add(new Productline(pId, pName, pDescription));
 
 
                         } // do while
                     } // using rdrProducts
                 } // using comProducts
             } // using conToysForBoys
-            return productlines;
+            return prodlines;
         }
     }
 }
