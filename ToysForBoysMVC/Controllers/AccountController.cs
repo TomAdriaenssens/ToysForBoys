@@ -9,12 +9,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ToysForBoysMVC.Models;
+using ToysForBoysMVC.Repository;
 
 namespace ToysForBoysMVC.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private ToysCon db = new ToysCon();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -79,6 +82,7 @@ namespace ToysForBoysMVC.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session["customer"] = db.GetCustomerByEmail(model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -139,6 +143,8 @@ namespace ToysForBoysMVC.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //var countries = 
+            Session["countries"]  = db.GetAllCountries();
             return View();
         }
 
@@ -155,8 +161,9 @@ namespace ToysForBoysMVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    db.RegisterCustomer(model);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -169,6 +176,7 @@ namespace ToysForBoysMVC.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            
             return View(model);
         }
 
