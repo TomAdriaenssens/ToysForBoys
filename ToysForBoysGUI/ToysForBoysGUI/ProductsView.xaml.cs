@@ -21,28 +21,31 @@ namespace ToysForBoysGUI
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class BrouwersView : Window
+    public partial class ProductsView : Window
     {
 
         private CollectionViewSource productsViewSource;
         public ObservableCollection<Product> productsOb = new ObservableCollection<Product>();
         public List<Productline> productlinesList = new List<Productline>();
 
-        public List<Product> OudeProducts = new List<Product>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Product> deletedProducts = new List<Product>();
         public List<Product> newProducts = new List<Product>();
         public List<Product> modifiedProducts = new List<Product>();
 
 
 
-        public BrouwersView()
+        public ProductsView()
         {
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            VulDeComboBox();
             VulDeGrid();
+            VulDeComboBox();
         }
 
 
@@ -52,25 +55,30 @@ namespace ToysForBoysGUI
             productsViewSource = (CollectionViewSource)(this.FindResource("productViewSource"));
             var prodManager = new ProductManager();
 
-            string category = null;
+            Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+            
 
-            if (comboBoxProductLine.SelectedItem != null)
+
+            if (comboBoxProductLine.SelectedIndex <= 0)
             {
-                category = comboBoxProductLine.SelectedItem.ToString();
+                productsOb = prodManager.GetProductsByProductLineName("");
             }
-            productsOb = prodManager.GetProductsByProductLineName(category);
+            else
+            {
+                productsOb = prodManager.GetProductsByProductLineName(selectedProductLine.Name);
+            }
             productsViewSource.Source = productsOb;
             productsOb.CollectionChanged += this.OnCollectionChanged;
 
         }
 
-        private void VulDeComboBox ()
+        private void VulDeComboBox()
         {
             productlinesList = ProductlineManager.GetProductlines();
-            foreach (Productline prodline in productlinesList)
-            {
-                comboBoxProductLine.Items.Add(prodline.Name);
-            }
+
+            productlinesList.Insert(0, new Productline { Name = "All Models" });
+            comboBoxProductLine.ItemsSource = productlinesList;
+            comboBoxProductLine.SelectedIndex = 0;
         }
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -84,12 +92,20 @@ namespace ToysForBoysGUI
                     newProducts.Add(nieuweProduct);
                 }
             }
-            
+
         }
 
+        private void comboBoxProductLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxProductLine.SelectedIndex == 0)
+                productDataGrid.Items.Filter = null;
+            else
+                productDataGrid.Items.Filter = new Predicate<object>(ProductLineIdFilter);
 
+        }
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
+            productDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
 
             List<Product> resultaatProducts = new List<Product>();
             var dbManager = new ProductManager();
@@ -103,24 +119,27 @@ namespace ToysForBoysGUI
 
             resultaatProducts.Clear();
 
-                if (modifiedProducts.Count() != 0)
+            if (modifiedProducts.Count() != 0)
+            {
+                resultaatProducts = dbManager.UpdateProductToToysForBoys(modifiedProducts);
+                if (resultaatProducts.Count > 0)
                 {
-                    resultaatProducts = dbManager.UpdateProductToToysForBoys(modifiedProducts);
-                    if (resultaatProducts.Count > 0)
+                    StringBuilder boodschap = new StringBuilder();
+                    boodschap.Append("Niet gewijzigd: \n");
+                    foreach (var b in resultaatProducts)
                     {
-                        StringBuilder boodschap = new StringBuilder();
-                        boodschap.Append("Niet gewijzigd: \n");
-                        foreach (var b in resultaatProducts)
-                        {
-                            boodschap.Append("Nummer: " + b.Id + " : " +
-                            b.Name + " niet\n");
-                        }
-                        MessageBox.Show(boodschap.ToString());
+                        boodschap.Append("Nummer: " + b.Id + " : " +
+                        b.Name + " niet\n");
                     }
+                    MessageBox.Show(boodschap.ToString());
                 }
+
                 MessageBox.Show(modifiedProducts.Count - resultaatProducts.Count +
                 " Product(s) gewijzigd in de database", "Info", MessageBoxButton.OK,
                 MessageBoxImage.Information);
+
+
+            }
 
             if (newProducts.Count() != 0)
             {
@@ -136,23 +155,32 @@ namespace ToysForBoysGUI
                     }
                     MessageBox.Show(boodschap.ToString());
                 }
+                MessageBox.Show(newProducts.Count - resultaatProducts.Count +
+                " Product(s) toegevoegd aan de database", "Info", MessageBoxButton.OK,
+                MessageBoxImage.Information);
+
+
             }
-            MessageBox.Show(newProducts.Count - resultaatProducts.Count +
-            " Product(s) toegevoegd aan de database", "Info", MessageBoxButton.OK,
-            MessageBoxImage.Information);
 
 
             VulDeGrid();
 
-                OudeProducts.Clear();
-                newProducts.Clear();
-                modifiedProducts.Clear();
-            }
-
-        private void comboBoxProductLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            VulDeGrid();
+            deletedProducts.Clear();
+            newProducts.Clear();
+            modifiedProducts.Clear();
         }
+
+
+        public bool ProductLineIdFilter(object prod)
+        {
+            Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+            Product p = prod as Product;
+            bool result = (p.ProductlineId == Convert.ToInt16(selectedProductLine.Id));
+
+            return result;
+        }
+
+
     }
 
 }

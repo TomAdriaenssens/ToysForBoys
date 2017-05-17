@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToysForBoysGUI"
-        xmlns:ToysForBoysLibrary="clr-namespace:ToysForBoysLibrary;assembly=ToysForBoysLibrary" x:Class="ToysForBoysGUI.BrouwersView"
+        xmlns:ToysForBoysLibrary="clr-namespace:ToysForBoysLibrary;assembly=ToysForBoysLibrary" x:Class="ToysForBoysGUI.ProductsView"
         mc:Ignorable="d"
         Title="Overzicht en onderhoud Producten" Height="480" Width="640" Loaded="Window_Loaded">
 
@@ -15,8 +15,8 @@
         <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
             <StackPanel HorizontalAlignment="Left" Margin="0" Width="Auto" Orientation="Horizontal">
                
-              <Label Content="Soort:"></Label>
-                <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged"></ComboBox>
+              <Label Content="Model :" Height="28" VerticalAlignment="Top"></Label>
+                <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name"></ComboBox>
       </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black"
