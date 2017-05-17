@@ -59,14 +59,15 @@ namespace ToysForBoysLibrary
         public decimal? BuyPrice
         {
             get { return buyPrice; }
-            set { value = buyPrice;
+            set { buyPrice = value;
                 changed = true;
             }
         }
         public int? ProductlineId
         {
             get { return productlineId; }
-            set { productlineId = value;
+            set {
+                productlineId = value;
                 changed = true;
             }
         }
