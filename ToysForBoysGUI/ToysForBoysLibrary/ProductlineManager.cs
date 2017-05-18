@@ -11,7 +11,7 @@ namespace ToysForBoysLibrary
     public class ProductlineManager
     {
 
-        public List<Productline> GetProductlines()
+        public static List<Productline> GetProductlines()
         {
             List<Productline> prodlines = new List<Productline>();
 
@@ -25,7 +25,7 @@ namespace ToysForBoysLibrary
                     
                     comProducten.CommandText = "[toysforboys].[dbo].[SP_ProductLines]";
                     
-                    conProducten.Open();
+                        conProducten.Open();
 
                     using (var rdrProducts = comProducten.ExecuteReader())
                     {
