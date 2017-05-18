@@ -12,13 +12,11 @@ namespace ToysForBoysMVC.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
-    public partial class toysforboysEntities : DbContext
+    public partial class ToysForBoysEntities : DbContext
     {
-        public toysforboysEntities()
-            : base("name=toysforboysEntities")
+        public ToysForBoysEntities()
+            : base("name=ToysForBoysEntities")
         {
         }
     
@@ -33,15 +31,5 @@ namespace ToysForBoysMVC.Models
         public virtual DbSet<order> orders { get; set; }
         public virtual DbSet<productline> productlines { get; set; }
         public virtual DbSet<product> products { get; set; }
-    
-        public virtual ObjectResult<productline> GetAllProductLines2()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<productline>("GetAllProductLines2");
-        }
-    
-        public virtual ObjectResult<productline> GetAllProductLines2(MergeOption mergeOption)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<productline>("GetAllProductLines2", mergeOption);
-        }
     }
 }

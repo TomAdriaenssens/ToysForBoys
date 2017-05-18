@@ -211,9 +211,6 @@
     <Compile Include="Models\customer.cs">
       <DependentUpon>Toys.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GetAllProductLines2_Result.cs">
-      <DependentUpon>Toys.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\order.cs">

@@ -14,6 +14,12 @@ namespace ToysForBoysMVC.Models
     
     public partial class order
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public order()
+        {
+            this.orderdetails = new HashSet<orderdetail>();
+        }
+    
         public int id { get; set; }
         public Nullable<System.DateTime> orderDate { get; set; }
         public Nullable<System.DateTime> requiredDate { get; set; }
@@ -23,5 +29,7 @@ namespace ToysForBoysMVC.Models
         public string status { get; set; }
     
         public virtual customer customer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<orderdetail> orderdetails { get; set; }
     }
 }

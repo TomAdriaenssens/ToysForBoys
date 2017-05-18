@@ -12,14 +12,11 @@ namespace ToysForBoysMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class orderdetail
+    public partial class C__MigrationHistory
     {
-        public int orderId { get; set; }
-        public int productId { get; set; }
-        public Nullable<int> quantityOrdered { get; set; }
-        public Nullable<decimal> priceEach { get; set; }
-    
-        public virtual order order { get; set; }
-        public virtual product product { get; set; }
+        public string MigrationId { get; set; }
+        public string ContextKey { get; set; }
+        public byte[] Model { get; set; }
+        public string ProductVersion { get; set; }
     }
 }

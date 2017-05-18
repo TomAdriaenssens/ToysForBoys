@@ -11,7 +11,7 @@ namespace ToysForBoysMVC.Repository
 
         public List<productline> GetAllProductLines()
         {
-            using (var db = new toysforboysEntities())
+            using (var db = new ToysForBoysEntities())
             {
                 
                 return db.productlines.OrderBy(m => m.name).ToList();
@@ -23,7 +23,7 @@ namespace ToysForBoysMVC.Repository
 
         public List<product> GetProductLineDetails(int id)
         {
-            using (var db = new toysforboysEntities())
+            using (var db = new ToysForBoysEntities())
             {
                 var query = from productLineDetails in db.products.Include("productline")
                             where  productLineDetails.productline.id == id
@@ -36,7 +36,7 @@ namespace ToysForBoysMVC.Repository
 
         public List<country> GetAllCountries()
         {
-            using (var db = new toysforboysEntities())
+            using (var db = new ToysForBoysEntities())
             {
                 var query = (from countries in db.countries
                              select countries).ToList();
@@ -46,8 +46,8 @@ namespace ToysForBoysMVC.Repository
         }
         public void RegisterCustomer(RegisterViewModel model)
         {
-            customer newcustomer = new customer() { name = model.Name, streetAndNumber = model.StreetAndNr, city = model.City, state = model.State, postalCode = model.PostalCode, countryId = model.CountryID };
-            using (var db = new toysforboysEntities())
+            customer newcustomer = new customer() { name = model.Name, streetAndNumber = model.StreetAndNr, city = model.City, state = model.State, postalCode = model.PostalCode, countryId = model.CountryID , email=model.Email};
+            using (var db = new ToysForBoysEntities())
             {
                 db.customers.Add(newcustomer);
                 db.SaveChanges();
@@ -56,22 +56,37 @@ namespace ToysForBoysMVC.Repository
 
         public customer GetCustomerByEmail(string email)
         {
-            using (var db = new toysforboysEntities())
+            using (var db = new ToysForBoysEntities())
             {
-                var customer = db.customers.Find(email);
+                customer customer = (from custom in db.customers
+                               where custom.email == email
+                               select custom).FirstOrDefault();
                 return customer;
             }
         }
 
         public product GetProductById(int? id)
         {
-            using (var db = new toysforboysEntities())
+            using (var db = new ToysForBoysEntities())
             {
                 var product = db.products.Find(id);
                 return product;
             }
         }
 
+        public int CreateNewOrder(order order)
+        {
+            var neworderid = 0;
+            using (var db = new ToysForBoysEntities())
+            {
+                db.orders.Add(order);
+                neworderid = db.orders.Last().id;
+                db.SaveChanges();
+            }
+            return neworderid;
+        }
+        
+        
         //public List<productline> GetAllProductLines()
         //{
         //    

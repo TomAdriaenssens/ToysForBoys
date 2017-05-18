@@ -12,14 +12,12 @@ namespace ToysForBoysMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class orderdetail
+    public partial class AspNetUserLogin
     {
-        public int orderId { get; set; }
-        public int productId { get; set; }
-        public Nullable<int> quantityOrdered { get; set; }
-        public Nullable<decimal> priceEach { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+        public string UserId { get; set; }
     
-        public virtual order order { get; set; }
-        public virtual product product { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

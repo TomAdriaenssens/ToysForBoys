@@ -14,6 +14,7 @@
                 <th>Aantal</th>
                 <th>Prijs per stuk</th>
                 <th>Verwijderen</th>
+                <th></th>
 
 
             </tr>
@@ -27,6 +28,7 @@
                     <td class="col-md-2">@Model[i].Naam </td>
                     <td class="col-md-3">@Html.TextBoxFor(m => m[i].AantalTeBestellen, new { @class = "form-control" })</td>
                     <td class="col-md-3">@Model[i].Prijs</td>
+                    <td></td>
                     <td class="col-md-3 hidden">@Html.TextBoxFor(m => m[i].ID, new { @class = "form-control" })</td>
 
 

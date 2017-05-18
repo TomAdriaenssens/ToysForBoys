@@ -41,7 +41,15 @@ namespace ToysForBoysMVC.Controllers
                     newWinkelMandItem.AantalTeBestellen = 1;
                     newWinkelMandItem.Prijs = newProduct.buyPrice;
                     newWinkelMandItem.AantalInStock = newProduct.quantityInStock;
-
+                    if (Session["orderid"] == null)
+                    {
+                        order winkelmandorder = new order()
+                        {
+                            orderDate = DateTime.Now,
+                            requiredDate = DateTime.Now.AddDays(10),
+                            //customerId
+                        };
+                    }
 
                     if (Session["winkelMandItems"] != null)
                     {

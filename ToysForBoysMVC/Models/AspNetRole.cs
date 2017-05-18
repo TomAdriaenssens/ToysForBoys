@@ -12,25 +12,18 @@ namespace ToysForBoysMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class customer
+    public partial class AspNetRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public customer()
+        public AspNetRole()
         {
-            this.orders = new HashSet<order>();
+            this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
-        public string streetAndNumber { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string postalCode { get; set; }
-        public Nullable<int> countryId { get; set; }
-        public string email { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual country country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order> orders { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }
