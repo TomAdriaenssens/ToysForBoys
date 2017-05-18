@@ -191,6 +191,28 @@ namespace ToysForBoysGUI
             return result;
         }
 
+        private void Discontinued_checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("  I am here  ");
+
+            /*if (comboBoxProductLine.SelectedIndex == 0)
+                productDataGrid.Items.Filter = null;
+            else*/
+
+                productDataGrid.Items.Filter = new Predicate<object>(ProductDiscontinuedFilter);
+
+
+        }
+
+        private void Discontinued_checkbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+            if (comboBoxProductLine.SelectedIndex == 0)
+                productDataGrid.Items.Filter = null;
+            else
+                productDataGrid.Items.Filter = new Predicate<object>(ProductLineIdFilter);
+
+        }
     }
 
 }
