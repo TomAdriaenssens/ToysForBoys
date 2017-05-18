@@ -181,6 +181,16 @@ namespace ToysForBoysGUI
         }
 
 
+
+
+        public bool ProductDiscontinuedFilter(object prod)
+        {
+            Product p = prod as Product;
+            bool result = (p.BuyPrice == 0)  && (p.QuantityInStock == 0);
+
+            return result;
+        }
+
     }
 
 }
