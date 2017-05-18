@@ -19,7 +19,11 @@
                
               <Label Content="Model :" Height="28" VerticalAlignment="Top"></Label>
                 <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name"></ComboBox>
-      </StackPanel>
+                <Label Content="   Discontinued Products: "   ></Label>
+                <CheckBox Name="Discontinued_checkbox" VerticalAlignment="Center" Checked="Discontinued_checkbox_Checked" Unchecked="Discontinued_checkbox_Unchecked"></CheckBox>
+
+
+            </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black"
 BorderThickness="1"
