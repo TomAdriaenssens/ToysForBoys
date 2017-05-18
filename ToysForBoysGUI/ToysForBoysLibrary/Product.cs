@@ -67,7 +67,7 @@ namespace ToysForBoysLibrary
         {
             get { return productlineId; }
             set { productlineId = value;
-                changed = true;
+                Changed = true;
             }
         }
         public bool Changed
