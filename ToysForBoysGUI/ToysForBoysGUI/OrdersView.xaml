@@ -24,7 +24,7 @@
         </Border>
         <Border DataContext="{StaticResource orderViewSource}" 
                 BorderBrush="Black" BorderThickness="1" >
-            <DataGrid x:Name="orderDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource orderViewSource}}" Margin="0,5,0,5" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" >
+            <DataGrid x:Name="orderDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource orderViewSource}}" Margin="0,5,0,5" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="ID" IsReadOnly="True" Width="SizeToHeader">
                         <DataGridTextColumn.ElementStyle>
@@ -38,9 +38,8 @@
                     <DataGridTextColumn x:Name="requiredDateColumn" Binding="{Binding RequiredDate}" Header="Required Date" Width="100"/>
                     <DataGridTextColumn x:Name="shippedDateColumn" Binding="{Binding ShippedDate}" Header="Shipped Date" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="commentsColumn" Binding="{Binding Comments}" Header="Comments" Width="100"/>
-                    <DataGridTextColumn x:Name="quantityInStockColumn" Binding="{Binding QuantityInStock}" Header="Quantity In Stock" Width="SizeToHeader" />
                     <DataGridTextColumn x:Name="customerIdColumn" Binding="{Binding CustomerId}" Header="Customer ID" Width="SizeToHeader" />
-                    <DataGridTextColumn x:Name="productlineIdColumn" Binding="{Binding ProductlineId}" Header="Productline Id" Width="SizeToHeader" />
+                    <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status" Width="100" IsReadOnly="False"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

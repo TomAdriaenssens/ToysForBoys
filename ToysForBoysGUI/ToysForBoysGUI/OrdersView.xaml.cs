@@ -26,6 +26,7 @@ namespace ToysForBoysGUI
         private CollectionViewSource ordersViewSource;
         public ObservableCollection<Order> ordersOb = new ObservableCollection<Order>();
         public List<Order> newOrders = new List<Order>();
+        public List<Order> modifiedOrders = new List<Order>();
 
         public OrdersView()
         {
@@ -60,7 +61,16 @@ namespace ToysForBoysGUI
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
+            orderDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
 
+            List<Order> resultaatProducts = new List<Order>();
+            var dbManager = new OrderManager();
+
+            foreach (Order p in ordersOb)
+            {
+                if ((p.Changed == true) && (p.Id != 0)) modifiedOrders.Add(p);
+                p.Changed = false;
+            }
         }
     }
 }
