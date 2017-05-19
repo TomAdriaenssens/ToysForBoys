@@ -1,0 +1,49 @@
+﻿@model List<ToysForBoysMVC.Models.WinkelMandItem>
+@{
+    ViewBag.Title = "Bevestigen";
+}
+
+<h1>Bedankt voor je bestelling!</h1>
+
+@if (Session["winkelMandItems"] != null)
+{
+    using (Html.BeginForm("WinkelMandje", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Aantal</th>
+
+                    <th></th>
+                    <th></th>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var urlVerwijderen = Url.Action("Verwijderen", "Home", new { id = Model[i].ID });
+                    <tr>
+                        <td class="col-md-2">@Model[i].Naam </td>
+                        
+                        <td class="col-md-3">@Model[i].Prijs</td>
+
+
+
+
+                    </tr> }
+            </tbody>
+        </table>
+
+        <div class="form-group">
+           
+
+        </div>
+    }
+}
+
+
+
