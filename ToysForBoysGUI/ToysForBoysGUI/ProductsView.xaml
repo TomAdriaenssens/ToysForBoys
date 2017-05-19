@@ -21,7 +21,14 @@
                 <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name"></ComboBox>
                 <Label Content="   Discontinued Products: "   ></Label>
                 <CheckBox Name="Discontinued_checkbox" VerticalAlignment="Center" Checked="Discontinued_checkbox_Checked" Unchecked="Discontinued_checkbox_Unchecked"></CheckBox>
-              </StackPanel>
+
+                <Label Content="  Apply MQC: "   ></Label>
+                <CheckBox Name="Apply_MQC_checkBox" VerticalAlignment="Center" Click="Apply_MQC_checkBox_Click" ></CheckBox>
+                <Label  Content="  MQC (Minimum Quantity in Stock): "   ></Label>
+                <TextBox x:Name="Min_Quantity_textBox" VerticalAlignment="Center" Width="44" Text="400"></TextBox>
+
+
+            </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >
             <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="buttonSave_Click"></Button>
