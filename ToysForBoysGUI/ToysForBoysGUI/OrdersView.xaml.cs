@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +14,53 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToysForBoysLibrary;
 
 namespace ToysForBoysGUI
 {
     /// <summary>
     /// Interaction logic for OrdersView.xaml
     /// </summary>
-    public partial class OrdersView : Page
+    public partial class OrdersView : Window
     {
+        private CollectionViewSource ordersViewSource;
+        public ObservableCollection<Order> ordersOb = new ObservableCollection<Order>();
+        public List<Order> newOrders = new List<Order>();
+
         public OrdersView()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            VulDeGrid();
+        }
+
+        private void VulDeGrid()
+        {
+            ordersViewSource = (CollectionViewSource)(this.FindResource("orderViewSource"));
+            var ordManager = new OrderManager();
+            
+            ordersOb = ordManager.GetOrders();
+            ordersViewSource.Source = ordersOb;
+            ordersOb.CollectionChanged += this.OnCollectionChanged;
+        }
+
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (Order newOrder in e.NewItems)
+                {
+                    newOrders.Add(newOrder);
+                }
+            }
+        }
+
+        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

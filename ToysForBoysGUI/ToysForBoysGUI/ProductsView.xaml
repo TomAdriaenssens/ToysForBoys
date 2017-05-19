@@ -21,13 +21,9 @@
                 <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name"></ComboBox>
                 <Label Content="   Discontinued Products: "   ></Label>
                 <CheckBox Name="Discontinued_checkbox" VerticalAlignment="Center" Checked="Discontinued_checkbox_Checked" Unchecked="Discontinued_checkbox_Unchecked"></CheckBox>
-
-
-            </StackPanel>
+              </StackPanel>
         </Border>
-        <Border Height="120" Background="SkyBlue" BorderBrush="Black"
-BorderThickness="1"
-DockPanel.Dock="Bottom" >
+        <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >
             <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="buttonSave_Click"></Button>
             
         </Border>

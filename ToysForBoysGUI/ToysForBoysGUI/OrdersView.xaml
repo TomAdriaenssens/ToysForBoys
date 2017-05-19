@@ -1,14 +1,48 @@
-﻿<Page x:Class="ToysForBoysGUI.OrdersView"
+﻿<Window x:Class="ToysForBoysGUI.OrdersView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ToysForBoysGUI"
+      xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
+      xmlns:glob1="clr-namespace:System.Globalization;assembly=mscorlib"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="OrdersView">
-
+      d:DesignHeight="480" d:DesignWidth="640"
+      xmlns:ToysForBoysLibrary="clr-namespace:ToysForBoysLibrary;assembly=ToysForBoysLibrary"
+      Title="OrdersView" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type ToysForBoysLibrary:Order}, CreateList=True}"/>
+    </Window.Resources>
     <DockPanel LastChildFill="True">
-        
+        <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+            <StackPanel HorizontalAlignment="Left" Margin="0" Width="Auto" Orientation="Horizontal">
+            </StackPanel>
+        </Border>
+        <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >
+            <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="buttonSave_Click"></Button>
+
+        </Border>
+        <Border DataContext="{StaticResource orderViewSource}" 
+                BorderBrush="Black" BorderThickness="1" >
+            <DataGrid x:Name="orderDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource orderViewSource}}" Margin="0,5,0,5" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="ID" IsReadOnly="True" Width="SizeToHeader">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Right"  />
+                                <Setter Property="Padding" Value="2,0,2,0"  />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn x:Name="orderDateColumn" Binding="{Binding OrderDate}" Header="Order Date" Width="100"/>
+                    <DataGridTextColumn x:Name="requiredDateColumn" Binding="{Binding RequiredDate}" Header="Required Date" Width="100"/>
+                    <DataGridTextColumn x:Name="shippedDateColumn" Binding="{Binding ShippedDate}" Header="Shipped Date" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="commentsColumn" Binding="{Binding Comments}" Header="Comments" Width="100"/>
+                    <DataGridTextColumn x:Name="quantityInStockColumn" Binding="{Binding QuantityInStock}" Header="Quantity In Stock" Width="SizeToHeader" />
+                    <DataGridTextColumn x:Name="customerIdColumn" Binding="{Binding CustomerId}" Header="Customer ID" Width="SizeToHeader" />
+                    <DataGridTextColumn x:Name="productlineIdColumn" Binding="{Binding ProductlineId}" Header="Productline Id" Width="SizeToHeader" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </DockPanel>
-</Page>
+</Window>
