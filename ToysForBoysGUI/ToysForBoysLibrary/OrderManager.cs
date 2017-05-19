@@ -93,5 +93,72 @@ namespace ToysForBoysLibrary
             } // using conToysForBoys
             return orderlines;
         }
+
+        public List<Order> UpdateOrdersToToysForBoys(List<Order> modifiedOrders)
+        {
+            List<Order> failedUpdates = new List<Order>();
+            var manager = new ToysForBoysDbManager();
+            using (var conOrders = manager.GetConnection())
+            {
+                using (var comUpdate = conOrders.CreateCommand())
+                {
+                    comUpdate.CommandType = CommandType.StoredProcedure;
+                    comUpdate.CommandText = "[toysforboys].[dbo].[SP_ToysForBoys_UpdateOrder]";
+
+                    var parId = comUpdate.CreateParameter();
+                    parId.ParameterName = "@id";
+                    comUpdate.Parameters.Add(parId);
+
+                    var parOrderDate = comUpdate.CreateParameter();
+                    parOrderDate.ParameterName = "@orderDate";
+                    comUpdate.Parameters.Add(parOrderDate);
+
+                    var parRequiredDate = comUpdate.CreateParameter();
+                    parRequiredDate.ParameterName = "@requiredDate";
+                    comUpdate.Parameters.Add(parRequiredDate);
+
+                    var parShippedDate = comUpdate.CreateParameter();
+                    parShippedDate.ParameterName = "@shippedDate";
+                    comUpdate.Parameters.Add(parShippedDate);
+
+                    var parComments = comUpdate.CreateParameter();
+                    parComments.ParameterName = "@comments";
+                    comUpdate.Parameters.Add(parComments);
+
+                    var parCustomerId = comUpdate.CreateParameter();
+                    parCustomerId.ParameterName = "@customerId";
+                    comUpdate.Parameters.Add(parCustomerId);
+
+                    var parStatus = comUpdate.CreateParameter();
+                    parStatus.ParameterName = "@status";
+                    comUpdate.Parameters.Add(parStatus);
+                    
+                    conOrders.Open();
+                    foreach (Order x in modifiedOrders)
+                    {
+                        try
+                        {
+                            parId.Value = x.Id;
+                            parOrderDate.Value = x.OrderDate;
+                            parRequiredDate.Value = x.RequiredDate;
+                            parShippedDate.Value = x.ShippedDate;
+                            parComments.Value = x.Comments;
+                            parCustomerId.Value = x.CustomerId;
+                            parStatus.Value = x.Status;
+
+                            if (comUpdate.ExecuteNonQuery() == 0)
+                            {
+                                failedUpdates.Add(x);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            failedUpdates.Add(x);
+                        }
+                    }
+                }
+            }
+            return failedUpdates;
+        }
     }
 }
