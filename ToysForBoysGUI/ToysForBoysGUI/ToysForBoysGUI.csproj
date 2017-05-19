@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ValidateScale.cs" />
+    <Compile Include="VeldMagNietNegatiefZijn.cs" />
+    <Compile Include="VeldMoetIngevuldZijn.cs" />
     <Page Include="OrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
