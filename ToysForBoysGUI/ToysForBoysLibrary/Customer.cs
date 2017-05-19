@@ -16,6 +16,7 @@ namespace ToysForBoysLibrary
         private String stateValue;
         private String postalCodeValue;
         private Int32 countryIdValue;
+        private String emailValue;
 
         
         public bool Changed { get; set; }  
@@ -86,10 +87,20 @@ namespace ToysForBoysLibrary
             }
         }
 
+        public String Email
+        {
+            get { return emailValue; }
+            set
+            {
+                emailValue = value;
+                Changed = true;    //Als de waarde veranderd is
+            }
+        }
+
 
 
         public Customer(Int32 customerId, String name, String streetAndNumber, String city, String state, String postalcode,
-                         Int32 countryId)
+                         Int32 countryId, String email)
         {
 
             customerIdValue = customerId;
@@ -99,6 +110,7 @@ namespace ToysForBoysLibrary
             this.State = state;
             this.PostalCode = postalcode;
             this.CountryId = countryId;
+            this.Email = email;
 
             this.Changed = false;
         }

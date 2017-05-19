@@ -38,7 +38,7 @@ namespace ToysForBoysLibrary
         public DateTime ShippedDate
         {
             get { return shippedDate; }
-            set { orderDate = value;
+            set { shippedDate = value;
                 Changed = true;
             }
         }

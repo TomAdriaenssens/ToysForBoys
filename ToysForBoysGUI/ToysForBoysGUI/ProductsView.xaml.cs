@@ -98,9 +98,17 @@ namespace ToysForBoysGUI
         private void comboBoxProductLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBoxProductLine.SelectedIndex == 0)
-                productDataGrid.Items.Filter = null;
+                if (Discontinued_checkbox.IsChecked== true)
+
+                    productDataGrid.Items.Filter = new Predicate<object>(ProductDiscontinuedFilter);
+                else productDataGrid.Items.Filter = null;
             else
-                productDataGrid.Items.Filter = new Predicate<object>(ProductLineIdFilter);
+
+                if (Discontinued_checkbox.IsChecked == true)
+                    productDataGrid.Items.Filter = new Predicate<object>(ProductDiscontinuedFilter);
+                else productDataGrid.Items.Filter = new Predicate<object>(ProductLineIdFilter);
+
+
 
         }
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -174,6 +182,7 @@ namespace ToysForBoysGUI
         public bool ProductLineIdFilter(object prod)
         {
             Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+
             Product p = prod as Product;
             bool result = (p.ProductlineId == Convert.ToInt16(selectedProductLine.Id));
 
@@ -185,10 +194,26 @@ namespace ToysForBoysGUI
 
         public bool ProductDiscontinuedFilter(object prod)
         {
+            bool result;
             Product p = prod as Product;
-            bool result = (p.BuyPrice == 0)  && (p.QuantityInStock == 0);
+            if (comboBoxProductLine.SelectedIndex == 0)
+            {
+
+               result = (p.BuyPrice == 0) && (p.QuantityInStock == 0);
+                
+            }
+            else
+            {
+                Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+
+               result = (p.BuyPrice == 0) && (p.QuantityInStock == 0)
+                                  && (p.ProductlineId == Convert.ToInt16(selectedProductLine.Id));
+                
+            }
 
             return result;
+
+
         }
 
         private void Discontinued_checkbox_Checked(object sender, RoutedEventArgs e)
@@ -213,6 +238,66 @@ namespace ToysForBoysGUI
                 productDataGrid.Items.Filter = new Predicate<object>(ProductLineIdFilter);
 
         }
+
+
+        public bool ProductMOQFilter(object prod)
+        {
+
+            bool result;
+            Product p = prod as Product;
+            if (comboBoxProductLine.SelectedIndex == 0)
+            {
+
+                result = (p.QuantityInStock < Convert.ToInt32(Min_Quantity_textBox.Text));
+
+            }
+            else
+            {
+                Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+
+                result = (p.QuantityInStock < Convert.ToInt32(Min_Quantity_textBox.Text))
+                                   && (p.ProductlineId == Convert.ToInt16(selectedProductLine.Id));
+
+            }
+
+            return result;
+
+
+/*
+            // Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+
+            Product p = prod as Product;
+            bool result = (p.QuantityInStock < Convert.ToInt32(Min_Quantity_textBox.Text));
+             //   && (p.ProductlineId == Convert.ToInt16(selectedProductLine.Id)) ;
+
+            return result;
+
+    */
+        }
+
+  
+
+
+    private void Apply_MQC_checkBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (Apply_MQC_checkBox.IsChecked == true)
+                productDataGrid.Items.Filter = new Predicate<object>(ProductMOQFilter);
+
+            else
+            {
+                // MessageBox.Show("  I am here  ");
+                if (comboBoxProductLine.SelectedIndex == 0)
+                    productDataGrid.Items.Filter = null;
+                else
+                    productDataGrid.Items.Filter = new Predicate<object>(ProductLineIdFilter);
+            }
+
+        }
+
+
+
+
+
     }
 
 }
