@@ -30,9 +30,7 @@
 
             </StackPanel>
         </Border>
-        <Border Height="120" Background="SkyBlue" BorderBrush="Black"
-BorderThickness="1"
-DockPanel.Dock="Bottom" >
+        <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >
             <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="buttonSave_Click"></Button>
             
         </Border>
