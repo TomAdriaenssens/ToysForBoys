@@ -1,4 +1,5 @@
 ﻿<Window
+        x:Name="Producten"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,35 +9,77 @@
         xmlns:local="clr-namespace:ToysForBoysGUI"
         xmlns:ToysForBoysLibrary="clr-namespace:ToysForBoysLibrary;assembly=ToysForBoysLibrary" x:Class="ToysForBoysGUI.ProductsView"
         mc:Ignorable="d"
-        Title="Overzicht en onderhoud Producten" Height="480" Width="640" Loaded="Window_Loaded">
+        Title="Overview and Maintainance Products" Height="480" Width="950" Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Window.Resources>
         <CollectionViewSource x:Key="productViewSource" d:DesignSource="{d:DesignInstance {x:Type ToysForBoysLibrary:Product}, CreateList=True}"/>
-    </Window.Resources>
-    <DockPanel LastChildFill="True">
-        <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <StackPanel HorizontalAlignment="Left" Margin="0" Width="Auto" Orientation="Horizontal">
-               
-              <Label Content="Model :" Height="28" VerticalAlignment="Top"></Label>
-                <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name"></ComboBox>
-                <Label Content="   Discontinued Products: "   ></Label>
-                <CheckBox Name="Discontinued_checkbox" VerticalAlignment="Center" Checked="Discontinued_checkbox_Checked" Unchecked="Discontinued_checkbox_Unchecked"></CheckBox>
 
-                <Label Content="  Apply MQC: "   ></Label>
-                <CheckBox Name="Apply_MQC_checkBox" VerticalAlignment="Center" Click="Apply_MQC_checkBox_Click" ></CheckBox>
-                <Label  Content="  MQC (Minimum Quantity in Stock): "   ></Label>
-                <TextBox x:Name="Min_Quantity_textBox" VerticalAlignment="Center" Width="44" Text="400"></TextBox>
+        <local:ProductlineValueList x:Key="ValueList"/>
+        <RoutedUICommand x:Key="cmdF5" ></RoutedUICommand>
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="Background" Value="Red"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding x:Name="cmdBindingF5" Command="{StaticResource cmdF5}" Executed="cmdBindingF5_Executed"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="F5" Command="{StaticResource cmdF5}"   />
+    </Window.InputBindings>
+    <DockPanel LastChildFill="True">
+        <Border Height="60" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+            <StackPanel HorizontalAlignment="Left" Margin="0" Width="Auto"  Orientation="Horizontal">
+
+                <Label Content="Model :" Height="28" VerticalAlignment="Top" Margin="10,5,5,5"></Label>
+                <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name" Height="25" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="5"></ComboBox>
+                <Grid Width="500" Height="50" Margin="10,5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25*"></RowDefinition>
+                        <RowDefinition Height="25*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="144"></ColumnDefinition>
+                        <ColumnDefinition Width="56"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Discontinued Products: "   Grid.Row="0" Grid.Column="0"></Label>
+                    <CheckBox Name="Discontinued_checkbox" VerticalAlignment="Center"  Click="Discontinued_checkbox_Click" Height="13" Margin="0,6"  Grid.Row="0" Grid.Column="1"/>
+                    <Label Content="Apply MQC: "    Grid.Row="1" Grid.Column="0"></Label>
+                    <CheckBox Name="Apply_MQC_checkBox" VerticalAlignment="Bottom" Click="Apply_MQC_checkBox_Click" Margin="0,0,0,8" Height="13"  Grid.Row="1" Grid.Column="1"></CheckBox>
+                    <Label  Content="MQC (Minimum Quantity in Stock): "    Grid.Row="1" Grid.Column="2"></Label>
+                    <TextBox x:Name="Min_Quantity_textBox" Text="400"  Width="50" Grid.Row="1" Grid.Column="3" Margin="15,2"/>
+
+
+                </Grid>
 
 
             </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >
             <Button x:Name="saveButton" Height="35" Width="150" Content="Save" Click="buttonSave_Click"></Button>
-            
+
         </Border>
         <Border DataContext="{StaticResource productViewSource}" 
                 BorderBrush="Black" BorderThickness="1" >
-            <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource productViewSource}}" Margin="0,5,0,5" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" >
+            <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource productViewSource}}" Margin="0,5,0,5" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" ColumnHeaderHeight="50">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
+ 
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" IsReadOnly="True" Width="SizeToHeader">
                         <DataGridTextColumn.ElementStyle>
@@ -46,10 +89,55 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="150"/>
-                    <DataGridTextColumn x:Name="descriptionColumn" Binding="{Binding Description}" Header="Description" Width="150"/>
-                    <DataGridTextColumn x:Name="scaleColumn" Binding="{Binding Scale}" Header="Scale" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="quantityInOrderColumn" Binding="{Binding QuantityInOrder}" Header="Quantity In Order" Width="SizeToHeader">
+
+                    <DataGridTextColumn x:Name="nameColumn" Header="Name" Width="200"  EditingElementStyle="{StaticResource textBoxInError}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Name" ValidatesOnExceptions="True" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <local:NameRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn x:Name="descriptionColumn"  Header="Description" Width="350" EditingElementStyle="{StaticResource textBoxInError}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Description" ValidatesOnExceptions="True" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <local:DescriptionRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Height" Value="50"></Setter>
+                                <Setter Property="TextWrapping" Value="Wrap"></Setter>
+
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn x:Name="scaleColumn"  Header="Scale" Width="SizeToHeader" EditingElementStyle="{StaticResource textBoxInError}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Scale" ValidatesOnExceptions="True" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <local:ScaleRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+
+                    </DataGridTextColumn>
+ 
+                    <DataGridTextColumn x:Name="quantityInOrderColumn"  Header="Quantity In Order" Width="60" EditingElementStyle="{StaticResource textBoxInError}" >
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="QuantityInOrder" ValidatesOnExceptions="True" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <local:QuantityInOrderRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Right"  />
@@ -57,7 +145,16 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn x:Name="quantityInStockColumn" Binding="{Binding QuantityInStock}" Header="Quantity In Stock" Width="SizeToHeader" >
+
+                    <DataGridTextColumn x:Name="quantityInStockColumn"  Header="Quantity In Stock" Width="60" EditingElementStyle="{StaticResource textBoxInError}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="QuantityInStock" ValidatesOnExceptions="True" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <local:QuantityInStockRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Right"  />
@@ -65,8 +162,17 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn x:Name="buyPriceColumn" Binding="{Binding BuyPrice , ConverterCulture={x:Static glob1:CultureInfo.CurrentCulture}, StringFormat=c}"  Header="Buy Price" 
-                                        Width="SizeToHeader" >
+
+                    <DataGridTextColumn x:Name="buyPriceColumn"  Header="Buy Price " 
+                                        Width="SizeToHeader" EditingElementStyle="{StaticResource textBoxInError}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="BuyPrice" ConverterCulture="{x:Static glob1:CultureInfo.CurrentCulture}" StringFormat="c"  ValidatesOnExceptions="True" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <local:BuyPriceRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Right"  />
@@ -74,15 +180,39 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn x:Name="productlineIdColumn" Binding="{Binding ProductlineId}" Header="Productline Id" Width="SizeToHeader" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="HorizontalAlignment" Value="Right"  />
-                                <Setter Property="Padding" Value="2,0,2,0"  />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+
+                    <DataGridComboBoxColumn   Header="Productline "  Width="100" x:Name="comboBoxProductlineName" 
+                    ItemsSource="{StaticResource ValueList}"                
+                    SelectedValueBinding="{Binding ProductlineId}"
+                    SelectedValuePath="Id"                        
+                    DisplayMemberPath= "Name"
+                     />
+
                 </DataGrid.Columns>
+                <DataGrid.RowValidationRules>
+                    <local:ScaleRule ValidationStep="UpdatedValue"/>
+                    <local:NameRule ValidationStep="UpdatedValue"/>
+                    <local:DescriptionRule ValidationStep="UpdatedValue"/>
+                    <local:QuantityInOrderRule ValidationStep="UpdatedValue"/>
+                    <local:QuantityInStockRule ValidationStep="UpdatedValue"/>
+                    <local:BuyPriceRule ValidationStep="UpdatedValue"/>
+                </DataGrid.RowValidationRules>
+                <DataGrid.RowValidationErrorTemplate>
+                    <ControlTemplate>
+                        <Grid Margin="0,-2,0,-2"
+ToolTip="{Binding RelativeSource={RelativeSource FindAncestor,
+AncestorType={x:Type DataGridRow}},
+Path=(Validation.Errors)[0].ErrorContent}">
+                            <Ellipse StrokeThickness="0" Fill="Red"
+                                    Width="{TemplateBinding FontSize}"
+                                    Height="{TemplateBinding FontSize}" 
+                                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                            <TextBlock Text="!" FontSize="{TemplateBinding FontSize}"
+                                FontWeight="Bold" Foreground="White"
+                                HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </DataGrid.RowValidationErrorTemplate>
             </DataGrid>
 
         </Border>

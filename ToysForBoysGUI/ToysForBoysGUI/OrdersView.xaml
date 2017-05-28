@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="480" d:DesignWidth="640"
       xmlns:ToysForBoysLibrary="clr-namespace:ToysForBoysLibrary;assembly=ToysForBoysLibrary"
-      Title="OrdersView" Loaded="Window_Loaded">
+      Title="OrdersView" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type ToysForBoysLibrary:Order}, CreateList=True}"/>
     </Window.Resources>

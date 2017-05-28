@@ -56,9 +56,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ValidateScale.cs" />
-    <Compile Include="VeldMagNietNegatiefZijn.cs" />
-    <Compile Include="VeldMoetIngevuldZijn.cs" />
+    <Compile Include="DescriptionRule.cs" />
+    <Compile Include="BuyPriceRule.cs" />
+    <Compile Include="QuantityInStockRule.cs" />
+    <Compile Include="ScaleRule.cs" />
+    <Compile Include="QuantityInOrderRule.cs" />
+    <Compile Include="NameRule.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="OrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -77,6 +83,10 @@
     <Compile Include="ProductsView.xaml.cs">
       <DependentUpon>ProductsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

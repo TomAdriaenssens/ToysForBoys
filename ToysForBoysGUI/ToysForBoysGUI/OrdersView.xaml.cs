@@ -72,5 +72,12 @@ namespace ToysForBoysGUI
                 p.Changed = false;
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+
+        }
     }
 }
