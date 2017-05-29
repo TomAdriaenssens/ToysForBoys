@@ -10,8 +10,14 @@
         Title="Overview and maintenance Customers" Loaded="Window_Loaded" Closing="Window_Closing"  >
     <Window.Resources>
         <CollectionViewSource x:Key="customerViewSource" d:DesignSource="{d:DesignInstance {x:Type ToysForBoysLibrary:Customer}, CreateList=True}"/>
+        <RoutedUICommand x:Key="cmdF5" ></RoutedUICommand>
     </Window.Resources>
-
+    <Window.CommandBindings>
+        <CommandBinding x:Name="cmdBindingF5" Command="{StaticResource cmdF5}" Executed="cmdBindingF5_Executed"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="F5" Command="{StaticResource cmdF5}"   />
+    </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
             <StackPanel HorizontalAlignment="Left" Margin="0" Width="Auto" Orientation="Horizontal">

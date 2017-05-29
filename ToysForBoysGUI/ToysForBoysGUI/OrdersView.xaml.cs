@@ -79,5 +79,10 @@ namespace ToysForBoysGUI
             e.Cancel = true;
 
         }
+
+        private void cmdBindingF5_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            VulDeGrid();
+        }
     }
 }
