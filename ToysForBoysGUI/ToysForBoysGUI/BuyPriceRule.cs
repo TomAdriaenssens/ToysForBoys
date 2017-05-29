@@ -31,9 +31,9 @@ namespace ToysForBoysGUI
 
                 
 
-                if (decNumber <= 0)
+                if (decNumber < 0)
 
-                    return new ValidationResult(false, "Veld moet groter zijn dan nul.");
+                    return new ValidationResult(false, "Veld moet groter of gelijk aan nul zijn.");
                 else
                     return ValidationResult.ValidResult;
             

@@ -31,15 +31,15 @@
         <KeyBinding Key="F5" Command="{StaticResource cmdF5}"   />
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
-        <Border Height="60" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+        <Border Height="70" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
             <StackPanel HorizontalAlignment="Left" Margin="0" Width="Auto"  Orientation="Horizontal">
 
-                <Label Content="Model :" Height="28" VerticalAlignment="Top" Margin="10,5,5,5"></Label>
-                <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name" Height="25" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="5"></ComboBox>
-                <Grid Width="500" Height="50" Margin="10,5">
+                <Label Content="Model :" Height="28" VerticalAlignment="Top" Margin="10,8,5,5"></Label>
+                <ComboBox Name="comboBoxProductLine" SelectionChanged="comboBoxProductLine_SelectionChanged" DisplayMemberPath = "Name" Height="25" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="8"></ComboBox>
+                <Grid Width="500" Height="65" Margin="10,5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25*"></RowDefinition>
-                        <RowDefinition Height="25*"></RowDefinition>
+                        <RowDefinition Height="30*"></RowDefinition>
+                        <RowDefinition Height="30*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="144"></ColumnDefinition>
@@ -47,12 +47,12 @@
                         <ColumnDefinition Width="200"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Discontinued Products: "   Grid.Row="0" Grid.Column="0"></Label>
-                    <CheckBox Name="Discontinued_checkbox" VerticalAlignment="Center"  Click="Discontinued_checkbox_Click" Height="13" Margin="0,6"  Grid.Row="0" Grid.Column="1"/>
-                    <Label Content="Apply MQC: "    Grid.Row="1" Grid.Column="0"></Label>
-                    <CheckBox Name="Apply_MQC_checkBox" VerticalAlignment="Bottom" Click="Apply_MQC_checkBox_Click" Margin="0,0,0,8" Height="13"  Grid.Row="1" Grid.Column="1"></CheckBox>
-                    <Label  Content="MQC (Minimum Quantity in Stock): "    Grid.Row="1" Grid.Column="2"></Label>
-                    <TextBox x:Name="Min_Quantity_textBox" Text="400"  Width="50" Grid.Row="1" Grid.Column="3" Margin="15,2"/>
+                    <Label Content="Discontinued Products: "   Grid.Row="0"  VerticalAlignment="Center"  Grid.Column="0"></Label>
+                    <CheckBox Name="Discontinued_checkbox" VerticalAlignment="Center"  Click="Discontinued_checkbox_Click" Height="20" Margin="0,6"  Grid.Row="0" Grid.Column="1"/>
+                    <Label Content="Apply MQC: "   VerticalAlignment="Center"   Grid.Row="1" Grid.Column="0"></Label>
+                    <CheckBox Name="Apply_MQC_checkBox" VerticalAlignment="Center" Click="Apply_MQC_checkBox_Click" Margin="0,0,0,8" Height="20"  Grid.Row="1" Grid.Column="1"></CheckBox>
+                    <Label  Content="MQC (Minimum Quantity in Stock): "  VerticalAlignment="Center"    Grid.Row="1" Grid.Column="2"></Label>
+                    <TextBox x:Name="Min_Quantity_textBox" Text="400"  VerticalAlignment="Center" VerticalContentAlignment="Center" Width="50" Grid.Row="1" Grid.Column="3" Margin="15,2"/>
 
 
                 </Grid>
@@ -66,7 +66,7 @@
         </Border>
         <Border DataContext="{StaticResource productViewSource}" 
                 BorderBrush="Black" BorderThickness="1" >
-            <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource productViewSource}}" Margin="0,5,0,5" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" ColumnHeaderHeight="50">
+            <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource productViewSource}}" Margin="0,-1,0,-30" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Stretch" ColumnHeaderHeight="50">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="ContentTemplate">

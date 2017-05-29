@@ -12,23 +12,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ToysForBoysLibrary;
 
 namespace ToysForBoysGUI
 {
     /// <summary>
-    /// Interaction logic for OrdersView.xaml
+    /// Interaction logic for CustomersView.xaml
     /// </summary>
-    public partial class OrdersView : Window
+    public partial class CustomersView : Window
     {
-        private CollectionViewSource ordersViewSource;
-        public ObservableCollection<Order> ordersOb = new ObservableCollection<Order>();
-        public List<Order> newOrders = new List<Order>();
-        public List<Order> modifiedOrders = new List<Order>();
+        private CollectionViewSource customersViewSource;
+        public ObservableCollection<Customer> customersOb = new ObservableCollection<Customer>();
+        public List<Customer> newCustomers = new List<Customer>();
+        public List<Customer> modifiedCustomers = new List<Customer>();
 
-        public OrdersView()
+        public CustomersView()
         {
             InitializeComponent();
         }
@@ -40,37 +39,39 @@ namespace ToysForBoysGUI
 
         private void VulDeGrid()
         {
-            ordersViewSource = (CollectionViewSource)(this.FindResource("orderViewSource"));
-            var ordManager = new OrderManager();
-            
-            ordersOb = ordManager.GetAllOrders();
-            ordersViewSource.Source = ordersOb;
-            ordersOb.CollectionChanged += this.OnCollectionChanged;
+            customersViewSource = (CollectionViewSource)(this.FindResource("customerViewSource"));
+            var custManager = new CustomerManager();
+
+            customersOb = custManager.GetAllCustomers();
+            customersViewSource.Source = customersOb;
+            customersOb.CollectionChanged += this.OnCollectionChanged;
         }
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
             {
-                foreach (Order newOrder in e.NewItems)
+                foreach (Customer newCustomer in e.NewItems)
                 {
-                    newOrders.Add(newOrder);
+                    newCustomers.Add(newCustomer);
                 }
             }
         }
 
+
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            orderDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+            customerDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
 
-            List<Order> resultaatProducts = new List<Order>();
-            var dbManager = new OrderManager();
+            List<Customer> resultaatProducts = new List<Customer>();
+            var dbManager = new CustomerManager();
 
-            foreach (Order p in ordersOb)
+            foreach (Customer p in customersOb)
             {
-                if ((p.Changed == true) && (p.Id != 0)) modifiedOrders.Add(p);
+                if ((p.Changed == true) && (p.Id!= 0)) modifiedCustomers.Add(p);
                 p.Changed = false;
             }
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -93,8 +93,9 @@ namespace ToysForBoysGUI
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
+
         {
-            productDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+            productDataGrid.CancelEdit(DataGridEditingUnit.Row);
 
             List<Product> resultaatProducts = new List<Product>();
             var dbManager = new ProductManager();

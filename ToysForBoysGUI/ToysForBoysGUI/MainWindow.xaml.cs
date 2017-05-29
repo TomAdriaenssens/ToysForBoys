@@ -21,7 +21,7 @@ namespace ToysForBoysGUI
     {
         ProductsView productsView = new ProductsView();
         OrdersView ordersView = new OrdersView();
-        ProductsView customersView = new ProductsView();
+        CustomersView customersView = new CustomersView();
 
         public MainWindow()
         {
@@ -36,7 +36,7 @@ namespace ToysForBoysGUI
 
         }
 
-        private void Klanten_MenuItem_Click(object sender, RoutedEventArgs e)
+        private void Customers_MenuItem_Click(object sender, RoutedEventArgs e)
         {
             customersView.Owner = this;
             customersView.Show();
@@ -55,8 +55,8 @@ namespace ToysForBoysGUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Programma afsluiten ?",
-                        "Afsluiten",
+            if (MessageBox.Show("Close application?",
+                        "Close",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Question,
                         MessageBoxResult.No) == MessageBoxResult.No)

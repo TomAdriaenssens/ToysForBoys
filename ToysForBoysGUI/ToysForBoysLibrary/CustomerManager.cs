@@ -12,6 +12,97 @@ namespace ToysForBoysLibrary
     public class CustomerManager
     {
 
+
+        public ObservableCollection<Customer> GetAllCustomers()
+        {
+            ObservableCollection<Customer> customers = new ObservableCollection<Customer>();
+
+            var dbManager = new ToysForBoysDbManager();
+
+            using (var conCustomers = dbManager.GetConnection())
+            {
+                using (var comCustomers = conCustomers.CreateCommand())
+                {
+                    comCustomers.CommandType = CommandType.StoredProcedure;
+
+                    comCustomers.CommandText = "[toysforboys].[dbo].[SP_GetAllCustomers]";
+
+                    conCustomers.Open();
+
+                    using (var rdrCustomers = comCustomers.ExecuteReader())
+                    {
+                        Int32 prodIdPos = rdrCustomers.GetOrdinal("id");
+                        Int32 prodNamePos = rdrCustomers.GetOrdinal("name");
+                        Int32 prodStreetAndNumberPos = rdrCustomers.GetOrdinal("streetAndNumber");
+                        Int32 prodCityPos = rdrCustomers.GetOrdinal("city");
+                        Int32 prodStatePos = rdrCustomers.GetOrdinal("state");
+                        Int32 prodPostalCodePos = rdrCustomers.GetOrdinal("postalCode");
+                        Int32 prodCountryIdPos = rdrCustomers.GetOrdinal("countryId");
+                        Int32 prodEmailPos = rdrCustomers.GetOrdinal("email");
+
+                        Int32 pId;
+                        String pName;
+                        String pStreetAndNumber;
+                        String pCity;
+                        String pState;
+                        String pPostalCode;
+                        Int32 pCountryId;
+                        String pEmail;
+
+                        while (rdrCustomers.Read())
+                        {
+
+                            if (rdrCustomers.IsDBNull(prodIdPos))
+                            { pId = 0; }
+                            else
+                            { pId = rdrCustomers.GetInt32(prodIdPos); }
+
+                            if (rdrCustomers.IsDBNull(prodNamePos))
+                            { pName = null; }
+                            else
+                            { pName = rdrCustomers.GetString(prodNamePos); }
+
+                            if (rdrCustomers.IsDBNull(prodStreetAndNumberPos))
+                            { pStreetAndNumber = null; }
+                            else
+                            { pStreetAndNumber = rdrCustomers.GetString(prodStreetAndNumberPos); }
+
+                            if (rdrCustomers.IsDBNull(prodCityPos))
+                            { pCity = null; }
+                            else
+                            { pCity = rdrCustomers.GetString(prodCityPos); }
+
+                            if (rdrCustomers.IsDBNull(prodStatePos))
+                            { pState = null; }
+                            else
+                            { pState = rdrCustomers.GetString(prodStatePos); }
+
+                            if (rdrCustomers.IsDBNull(prodPostalCodePos))
+                            { pPostalCode = null; }
+                            else
+                            { pPostalCode = rdrCustomers.GetString(prodPostalCodePos); }
+
+                            if (rdrCustomers.IsDBNull(prodCountryIdPos))
+                            { pCountryId = 0; }
+                            else
+                            { pCountryId = rdrCustomers.GetInt32(prodCountryIdPos); }
+
+                            if (rdrCustomers.IsDBNull(prodEmailPos))
+                            { pEmail = null; }
+                            else
+                            { pEmail = rdrCustomers.GetString(prodEmailPos); }
+
+
+                            customers.Add(new Customer(pId, pName, pStreetAndNumber, pCity, pState, pPostalCode, pCountryId, pEmail));
+
+
+                        } // do while
+                    } // using rdrCustomers
+                } // using comCustomers
+            } // using conCustomers
+            return customers;
+        }
+
         public ObservableCollection<Customer> GetCustomersByName(String name)
         {
             ObservableCollection<Customer> products = new ObservableCollection<Customer>();
@@ -40,16 +131,16 @@ namespace ToysForBoysLibrary
 
                     conProducten.Open();
 
-                    using (var rdrProducts = comProducten.ExecuteReader())
+                    using (var rdrCustomers = comProducten.ExecuteReader())
                     {
-                        Int32 prodIdPos = rdrProducts.GetOrdinal("id");
-                        Int32 prodNamePos = rdrProducts.GetOrdinal("name");
-                        Int32 prodStreetAndNumberPos = rdrProducts.GetOrdinal("streetAndNumber");
-                        Int32 prodCityPos = rdrProducts.GetOrdinal("city");
-                        Int32 prodStatePos = rdrProducts.GetOrdinal("state");
-                        Int32 prodPostalCodePos = rdrProducts.GetOrdinal("postalCode");
-                        Int32 prodCountryIdPos = rdrProducts.GetOrdinal("countryId");
-                        Int32 prodEmailPos = rdrProducts.GetOrdinal("email");
+                        Int32 prodIdPos = rdrCustomers.GetOrdinal("id");
+                        Int32 prodNamePos = rdrCustomers.GetOrdinal("name");
+                        Int32 prodStreetAndNumberPos = rdrCustomers.GetOrdinal("streetAndNumber");
+                        Int32 prodCityPos = rdrCustomers.GetOrdinal("city");
+                        Int32 prodStatePos = rdrCustomers.GetOrdinal("state");
+                        Int32 prodPostalCodePos = rdrCustomers.GetOrdinal("postalCode");
+                        Int32 prodCountryIdPos = rdrCustomers.GetOrdinal("countryId");
+                        Int32 prodEmailPos = rdrCustomers.GetOrdinal("email");
 
                         Int32    pId;
                         String   pName;
@@ -60,48 +151,48 @@ namespace ToysForBoysLibrary
                         Int32   pCountryId;
                         String   pEmail;
 
-                        while (rdrProducts.Read())
+                        while (rdrCustomers.Read())
                         {
 
-                            if (rdrProducts.IsDBNull(prodIdPos))
+                            if (rdrCustomers.IsDBNull(prodIdPos))
                             { pId = 0; }
                             else
-                            { pId = rdrProducts.GetInt32(prodIdPos); }
+                            { pId = rdrCustomers.GetInt32(prodIdPos); }
 
-                            if (rdrProducts.IsDBNull(prodNamePos))
+                            if (rdrCustomers.IsDBNull(prodNamePos))
                             { pName = null; }
                             else
-                            { pName  = rdrProducts.GetString(prodNamePos); }
+                            { pName  = rdrCustomers.GetString(prodNamePos); }
 
-                            if (rdrProducts.IsDBNull(prodStreetAndNumberPos))
+                            if (rdrCustomers.IsDBNull(prodStreetAndNumberPos))
                             { pStreetAndNumber = null; }
                             else
-                             { pStreetAndNumber = rdrProducts.GetString(prodStreetAndNumberPos); }
+                             { pStreetAndNumber = rdrCustomers.GetString(prodStreetAndNumberPos); }
 
-                            if (rdrProducts.IsDBNull(prodCityPos))
+                            if (rdrCustomers.IsDBNull(prodCityPos))
                             { pCity = null; }
                             else
-                            { pCity = rdrProducts.GetString(prodCityPos); }
+                            { pCity = rdrCustomers.GetString(prodCityPos); }
 
-                            if (rdrProducts.IsDBNull(prodStatePos))
+                            if (rdrCustomers.IsDBNull(prodStatePos))
                             { pState = null; }
                             else
-                            { pState = rdrProducts.GetString(prodStatePos); }
+                            { pState = rdrCustomers.GetString(prodStatePos); }
 
-                            if (rdrProducts.IsDBNull(prodPostalCodePos))
+                            if (rdrCustomers.IsDBNull(prodPostalCodePos))
                             { pPostalCode = null; }
                             else
-                            { pPostalCode = rdrProducts.GetString(prodPostalCodePos); }
+                            { pPostalCode = rdrCustomers.GetString(prodPostalCodePos); }
 
-                            if (rdrProducts.IsDBNull(prodCountryIdPos))
+                            if (rdrCustomers.IsDBNull(prodCountryIdPos))
                             { pCountryId = 0; }
                             else
-                            { pCountryId = rdrProducts.GetInt32(prodCountryIdPos); }
+                            { pCountryId = rdrCustomers.GetInt32(prodCountryIdPos); }
 
-                            if (rdrProducts.IsDBNull(prodEmailPos))
+                            if (rdrCustomers.IsDBNull(prodEmailPos))
                             { pEmail = null; }
                             else
-                            { pEmail = rdrProducts.GetString(prodEmailPos); }
+                            { pEmail = rdrCustomers.GetString(prodEmailPos); }
 
                            
                             products.Add(new Customer(pId, pName, pStreetAndNumber, pCity, pState, pPostalCode, pCountryId, pEmail));
@@ -190,9 +281,6 @@ namespace ToysForBoysLibrary
             return nietToegevoegdeProducts;
         }
 
-
-    
-
         public List<Customer> UpdateCustomerToToysForBoys(List<Customer> modifiedProducts)
         {
             List<Customer> failedUpdates = new List<Customer>();
@@ -244,7 +332,7 @@ namespace ToysForBoysLibrary
 
                         try
                         {
-                            parId.Value = x.CustomerId;
+                            parId.Value = x.Id;
                             parName.Value = x.Name;
                             parScale.Value = x.StreetAndNumber;
                             parDescription.Value = x.City;

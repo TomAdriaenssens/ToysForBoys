@@ -9,7 +9,7 @@ namespace ToysForBoysLibrary
     public class Customer
     {
 
-        private Int32 customerIdValue;
+        private Int32 IdValue;
         private String nameValue;
         private String streetAndNumberValue;
         private String cityValue;
@@ -21,8 +21,8 @@ namespace ToysForBoysLibrary
         
         public bool Changed { get; set; }  
 
-        public Int32 CustomerId
-        { get { return customerIdValue; } } 
+        public Int32 Id
+        { get { return IdValue; } } 
 
 
 
@@ -103,7 +103,7 @@ namespace ToysForBoysLibrary
                          Int32 countryId, String email)
         {
 
-            customerIdValue = customerId;
+            IdValue = customerId;
             this.Name = name;
             this.StreetAndNumber = streetAndNumber;
             this.City = city;

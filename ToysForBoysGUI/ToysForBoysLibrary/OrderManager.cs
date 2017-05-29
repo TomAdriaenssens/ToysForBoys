@@ -11,7 +11,7 @@ namespace ToysForBoysLibrary
     public class OrderManager
     {
 
-        public ObservableCollection<Order> GetOrders()
+        public ObservableCollection<Order> GetAllOrders()
         {
             ObservableCollection<Order> orderlines = new ObservableCollection<Order>();
 

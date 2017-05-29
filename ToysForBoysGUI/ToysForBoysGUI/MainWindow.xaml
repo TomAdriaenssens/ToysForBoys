@@ -17,10 +17,10 @@
             <RowDefinition Height="26*"/>
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem x:Name="Afsluiten_MenuItem" Header="Afsluiten" Command="Close"/>
-            <MenuItem Header="Overzichten">
-                <MenuItem  x:Name="Producten_MenuItem" Header="Producten" Click="Producten_MenuItem_Click" />
-                <MenuItem  x:Name="Klanten_MenuItem" Header="Klanten" Click="Klanten_MenuItem_Click" />
+            <MenuItem x:Name="Afsluiten_MenuItem" Header="Close" Command="Close"/>
+            <MenuItem Header="Overviews">
+                <MenuItem  x:Name="Producten_MenuItem" Header="Products" Click="Producten_MenuItem_Click" />
+                <MenuItem  x:Name="Klanten_MenuItem" Header="Customers" Click="Customers_MenuItem_Click" />
                 <MenuItem  x:Name="Orders_MenuItem" Header="Orders" Click="Orders_MenuItem_Click" />
             </MenuItem>
         </Menu>
