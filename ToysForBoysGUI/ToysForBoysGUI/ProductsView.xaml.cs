@@ -55,18 +55,10 @@ namespace ToysForBoysGUI
             productsViewSource = (CollectionViewSource)(this.FindResource("productViewSource"));
             var prodManager = new ProductManager();
 
-            Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
-            
+            //Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
 
-
-            if (comboBoxProductLine.SelectedIndex <= 0)
-            {
-                productsOb = prodManager.GetProductsByProductLineName("");
-            }
-            else
-            {
-                productsOb = prodManager.GetProductsByProductLineName(selectedProductLine.Name);
-            }
+            productsOb = prodManager.GetProductsByProductLineName("");
+            productDataGrid.Items.Filter = new Predicate<object>(ProductFilter);
             productsViewSource.Source = productsOb;
             productsOb.CollectionChanged += this.OnCollectionChanged;
 
@@ -96,16 +88,14 @@ namespace ToysForBoysGUI
         }
 
         private void comboBoxProductLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (comboBoxProductLine.SelectedIndex == 0)
-                productDataGrid.Items.Filter = null;
-            else
-                productDataGrid.Items.Filter = new Predicate<object>(ProductLineIdFilter);
-
+        {            
+            productDataGrid.Items.Filter = new Predicate<object>(ProductFilter);
         }
+
         private void buttonSave_Click(object sender, RoutedEventArgs e)
+
         {
-            productDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+            productDataGrid.CancelEdit(DataGridEditingUnit.Row);
 
             List<Product> resultaatProducts = new List<Product>();
             var dbManager = new ProductManager();
@@ -170,17 +160,101 @@ namespace ToysForBoysGUI
             modifiedProducts.Clear();
         }
 
-
-        public bool ProductLineIdFilter(object prod)
+        public bool ProductFilter(object prod)
         {
-            Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+
+            bool result = true;
+
             Product p = prod as Product;
-            bool result = (p.ProductlineId == Convert.ToInt16(selectedProductLine.Id));
+
+ 
+            Productline selectedProductLine = (Productline)comboBoxProductLine.SelectedValue;
+
+            if ( comboBoxProductLine.SelectedIndex > 0)
+            {
+                result = (p.ProductlineId == Convert.ToInt16(selectedProductLine.Id));
+
+            }
+
+            if (result)
+            {
+                if (Discontinued_checkbox.IsChecked == true)
+                {
+                    result = (p.BuyPrice == 0);
+
+                    if (!result && Apply_MQC_checkBox.IsChecked == true)
+                    {
+                        result = (p.QuantityInStock < Convert.ToInt32(Min_Quantity_textBox.Text) && p.BuyPrice != 0);
+                    }
+
+                }
+                else
+                {
+                    if (result && Apply_MQC_checkBox.IsChecked == true)
+                    {
+                        result = (p.QuantityInStock < Convert.ToInt32(Min_Quantity_textBox.Text) && p.BuyPrice != 0);
+                    }
+
+                }
+
+
+            }
+ 
+
+
+            
+
+
 
             return result;
+
+
+
+        }
+
+        private void Apply_MQC_checkBox_Click(object sender, RoutedEventArgs e)
+        {
+ 
+
+            productDataGrid.Items.Filter = new Predicate<object>(ProductFilter);
+
+        }
+
+        private void Discontinued_checkbox_Click(object sender, RoutedEventArgs e)
+        {
+            productDataGrid.Items.Filter = new Predicate<object>(ProductFilter);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+     
+            this.Hide();
+            e.Cancel = true;
         }
 
 
+        private void cmdBindingF5_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            productDataGrid.CancelEdit(DataGridEditingUnit.Row);
+            comboBoxProductLine.SelectedIndex = 0;
+            Discontinued_checkbox.IsChecked = false;
+            Apply_MQC_checkBox.IsChecked = false;
+            VulDeGrid();
+ 
+        }
+    }
+
+    public class ProductlineValueList : List<Productline>
+    {
+        public ProductlineValueList()
+        {
+            List<Productline> productLineItems = new List<Productline>();
+            productLineItems = ProductlineManager.GetProductlines();
+            foreach (var pl in productLineItems)
+            {
+                this.Add(pl);
+            }
+        }
     }
 
 }
