@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.rage{
+    font-family:Rage;
+    font-style:italic;
+    font-size:50px;
+}

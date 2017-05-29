@@ -5,7 +5,7 @@
 
 <h1>Bedankt voor je bestelling!</h1>
 
-@if (Session["winkelMandItems"] != null)
+@if (Session["bevestigdeItems"] != null)
 {
     using (Html.BeginForm("WinkelMandje", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
@@ -15,7 +15,7 @@
                     <th>Naam</th>
                     <th>Aantal</th>
 
-                    <th></th>
+                    <th> Totaal</th>
                     <th></th>
 
 
@@ -29,7 +29,9 @@
                     <tr>
                         <td class="col-md-2">@Model[i].Naam </td>
                         
-                        <td class="col-md-3">@Model[i].Prijs</td>
+                        <td class="col-md-3">@Model[i].AantalTeBestellen</td>
+
+                        <td class="col-md-3">@String.Format("{0:€ #,##0.00}", Model[i].Prijs * Model[i].AantalTeBestellen)</td>
 
 
 
@@ -40,7 +42,7 @@
 
         <div class="form-group">
            
-
+            <p class="alert alert-info">U hebt betaald: @(String.Format("{0:€ #,##0.00}", ViewBag.Totaal))</p>
         </div>
     }
 }

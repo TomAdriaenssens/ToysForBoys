@@ -213,6 +213,7 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OpenOrderModel.cs" />
     <Compile Include="Models\order.cs">
       <DependentUpon>Toys.tt</DependentUpon>
     </Compile>
@@ -325,6 +326,7 @@
     <Content Include="Views\Home\ProductDetails.cshtml" />
     <Content Include="Views\Home\WinkelMandje.cshtml" />
     <Content Include="Views\Home\Bevestigen.cshtml" />
+    <Content Include="Views\Home\Besteloverzicht.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

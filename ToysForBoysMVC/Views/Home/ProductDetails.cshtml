@@ -19,6 +19,8 @@
     <tbody>
         @foreach (var product in Model)
         {
+            if (product.buyPrice != 0)
+            {
             <tr>
                 <td class="col-md-2">@Html.DisplayFor(m => product.name) </td>
                 <td class="col-md-3">@product.scale</td>
@@ -34,6 +36,7 @@
                 {
                     <td class="col-md-1"> <span class="label label-danger">uitverkocht</span> </td> }
             </tr> }
+        }
     </tbody>
 </table>
 
