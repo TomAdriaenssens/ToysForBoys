@@ -12,7 +12,7 @@ namespace ToysForBoysMVC.Controllers
     {
 
         private ToysCon db = new ToysCon();
-        private int opgestart = 0;
+        
         public ActionResult Index()
         {
             if(User.Identity.IsAuthenticated)
@@ -38,29 +38,32 @@ namespace ToysForBoysMVC.Controllers
             List<WinkelMandItem> winkelMandItems = new List<WinkelMandItem>();
             WinkelMandItem newWinkelMandItem = new WinkelMandItem();
 
-            if (opgestart == 0)
-            {
-                List<orderdetail> openOrderDetails = db.findMANDJEOrders(((customer)Session["customer"]).id);
-                if (openOrderDetails.Count() > 0)
-                {
-                    foreach (var orderDetail in openOrderDetails)
-                    {
-                        product newProduct = db.GetProductById(orderDetail.productId);
-                        if (newProduct != null)
-                        {
-                            newWinkelMandItem.ID = newProduct.id;
-                            newWinkelMandItem.Naam = newProduct.name;
-                            newWinkelMandItem.AantalTeBestellen = (Int32)orderDetail.quantityOrdered;
-                            newWinkelMandItem.Prijs = newProduct.buyPrice;
-                            newWinkelMandItem.AantalInStock = newProduct.quantityInStock;
-                            winkelMandItems.Add(newWinkelMandItem);
-                        }
-                    }
-                    Session["winkelMandItems"] = winkelMandItems;
-                    Session["orderid"] = openOrderDetails[0].orderId;
-                }
-                opgestart = 1;
-            }
+            //if (Session["opgestart"] == null)
+            //{
+            //    List<orderdetail> openOrderDetails = db.findMANDJEOrders(((customer)Session["customer"]).id);
+            //    if (openOrderDetails.Count() > 0)
+            //    {
+            //        foreach (var orderDetail in openOrderDetails)
+            //        {
+            //            product newProduct = db.GetProductById(orderDetail.productId);
+            //            if (newProduct != null)
+            //            {
+            //                newWinkelMandItem.ID = newProduct.id;
+            //                newWinkelMandItem.Naam = newProduct.name;
+            //                newWinkelMandItem.AantalTeBestellen = (Int32)orderDetail.quantityOrdered;
+            //                newWinkelMandItem.Prijs = newProduct.buyPrice;
+            //                newWinkelMandItem.AantalInStock = newProduct.quantityInStock;
+            //                winkelMandItems.Add(newWinkelMandItem);
+            //            }
+            //        }
+            //        Session["winkelMandItems"] = winkelMandItems;
+            //        Session["orderid"] = openOrderDetails[0].orderId;
+
+            //        Session["opgestart"] = 1;
+
+            //    }
+
+            //}
 
             if (id != null)
             {
@@ -124,7 +127,15 @@ namespace ToysForBoysMVC.Controllers
             {
                 winkelMandItems =(List<WinkelMandItem>)Session["winkelMandItems"];
             }
-
+            ViewBag.Totaal = 0;
+            if (winkelMandItems != null)
+            {
+                foreach (var item in winkelMandItems)
+                {
+                    ViewBag.Totaal += (item.AantalTeBestellen * item.Prijs);
+                }
+               
+            }
             return View(winkelMandItems);
         }
 
@@ -154,6 +165,15 @@ namespace ToysForBoysMVC.Controllers
                     }
                 }
                 Session["winkelMandItems"] = winkelMandItems;
+
+            }
+            ViewBag.Totaal = 0;
+            if (winkelMandItems != null)
+            {
+                foreach (var item in winkelMandItems)
+                {
+                    ViewBag.Totaal += (item.AantalTeBestellen * item.Prijs);
+                }
 
             }
             return View(winkelMandItems);
@@ -186,13 +206,37 @@ namespace ToysForBoysMVC.Controllers
         {
             var winkelMandItems = (List<WinkelMandItem>)Session["winkelMandItems"];
             db.changeOrderStatus((Int32)Session["orderid"]);
+            Session["bevestigdeItems"] = Session["winkelMandItems"];
+            var bevestigdeItems = (List<WinkelMandItem>)Session["bevestigdeItems"];
             Session["winkelMandItems"] = null;
             Session["orderid"] = null;
-            return View(winkelMandItems);
+            db.UpdateAantallenInStock(bevestigdeItems);
+
+            ViewBag.Totaal = 0;
+            if (winkelMandItems != null)
+            {
+                foreach (var item in winkelMandItems)
+                {
+                    ViewBag.Totaal += (item.AantalTeBestellen * item.Prijs);
+                }
+
+            }
+            return View(bevestigdeItems);
 
         }
 
+        public ActionResult Besteloverzicht()
+        {
+            List<order> openOrders = new List<order>();
 
+            if (Session["customer"] != null)
+            {
+                var customerId = ((customer)Session["customer"]).id;
+                openOrders = db.getGeplaatsteBestellingenKlant(customerId); 
+            }
+
+            return View(openOrders);
+        }
 
         }
 }

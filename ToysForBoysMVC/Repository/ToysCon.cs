@@ -192,7 +192,36 @@ namespace ToysForBoysMVC.Repository
             }
         }
 
+        public void UpdateAantallenInStock(List<WinkelMandItem> winkelmanditems)
+        {
+            using (var db = new ToysForBoysEntities())
+            {
+                foreach (var item in winkelmanditems)
+                {
+                    var product = db.products.Find(item.ID);
+                    product.quantityInOrder += item.AantalTeBestellen;
+                    product.quantityInStock -= item.AantalTeBestellen;
+                    db.SaveChanges();
+                }
+            }
+        }
 
+        public List<order> getGeplaatsteBestellingenKlant(int customerId)
+        {
+            List<order> openOrders = new List<order>();
+
+            using (var db = new ToysForBoysEntities())
+            {
+                List<order> openOrderCustomer = (from order in db.orders
+                                           where (order.customerId == customerId) 
+                                           select order).ToList();
+                if (openOrderCustomer != null)
+                {
+                    openOrders = openOrderCustomer;
+                }
+            }
+            return openOrders;
+        }
         //public List<productline> GetAllProductLines()
         //{
         //    

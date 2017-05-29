@@ -1,0 +1,42 @@
+﻿@model List<ToysForBoysMVC.Models.order>
+@{
+    ViewBag.Title = "Besteloverzicht";
+}
+
+<h2>Besteloverzicht</h2>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+
+
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            
+            <tr>
+                <td class="col-md-2">@Model[i].id </td>
+
+                <td class="col-md-3">@Model[i].status</td>
+
+           
+
+
+            </tr> }
+    </tbody>
+</table>
+
+<div class="form-group">
+
+</div>
+
+
+
